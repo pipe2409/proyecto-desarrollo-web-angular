@@ -4,12 +4,12 @@ import { AppComponent } from './app.component'; // 👈 cambia AppComponent por 
 
 @NgModule({
   declarations: [
-    AppComponent // 👈 cambia aquí también
+    AppComponent 
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent] // 👈 y aquí
+  bootstrap: [AppComponent] 
 })
 export class AppModule { }
