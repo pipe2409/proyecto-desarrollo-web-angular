@@ -1,5 +1,7 @@
 import { CuentaHabitacion } from './cuenta-habitacion';
 import { Huesped } from './huesped';
+import { Habitacion } from './habitacion';
+import { Operador } from './operador';
 export class Reserva {
 
   id?: number;
