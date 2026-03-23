@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './app.component'; // 👈 cambia AppComponent por NavbarComponent
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent // 👈 cambia aquí también
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] // 👈 y aquí
 })
 export class AppModule { }
