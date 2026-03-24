@@ -1,15 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component'; // 👈 cambia AppComponent por NavbarComponent
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+/* 🔥 IMPORTANTE: tu módulo de landing */
+import { LandingModule } from './features/landing/landing.module';
 
 @NgModule({
   declarations: [
-    AppComponent 
+    AppComponent
+    // ⚠️ NO pongas aquí componentes de landing
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+
+    /* 🔥 AQUÍ se conecta toda tu landing */
+    LandingModule
   ],
   providers: [],
-  bootstrap: [AppComponent] 
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

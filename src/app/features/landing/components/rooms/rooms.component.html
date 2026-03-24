@@ -1,0 +1,62 @@
+<section id="habitaciones" class="habitaciones-section">
+  <div class="container">
+    <div class="section-header habitaciones-header">
+      <h2 class="section-title">Nuestras Habitaciones</h2>
+      <p class="section-description">
+        Descubre el confort y la elegancia de nuestras habitaciones diseñadas
+        para ofrecerte una estancia inolvidable.
+      </p>
+    </div>
+
+    <div class="habitaciones-carousel-wrap">
+      <div class="habitaciones-carousel">
+        <article
+          class="habitacion-slide"
+          *ngFor="let room of rooms; let i = index"
+          [class.is-active]="i === 1 || rooms.length === 1"
+        >
+          <div class="habitacion-slide__image">
+            <img
+              [src]="room.imageUrl"
+              [alt]="room.name"
+              loading="lazy"
+            />
+
+            <div class="habitacion-slide__overlay"></div>
+
+            <div class="habitacion-slide__precio">
+              <span>{{ room.price | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span>/noche</span>
+            </div>
+          </div>
+
+          <div class="habitacion-slide__content">
+            <div class="habitacion-slide__meta">
+              <span>{{ room.capacity }}</span>
+              <span>·</span>
+              <span>{{ room.beds }}</span>
+            </div>
+
+            <h3 class="habitacion-slide__nombre">{{ room.name }}</h3>
+
+            <p class="habitacion-slide__descripcion">
+              {{ room.description }}
+            </p>
+
+            <div class="habitacion-slide__servicios">
+              <ul>
+                <li *ngFor="let amenity of room.amenities">
+                  {{ amenity }}
+                </li>
+              </ul>
+            </div>
+
+            <div class="habitacion-slide__actions">
+              <a class="btn-habitacion-primary" href="#reservas">Reservar</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

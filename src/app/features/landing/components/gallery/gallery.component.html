@@ -1,0 +1,46 @@
+<section id="galeria" class="galeria-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Galería</h2>
+      <p class="section-description">
+        Explora nuestras instalaciones y descubre el paraíso que te espera.
+      </p>
+    </div>
+
+    <div class="galeria-grid">
+      <div
+        class="galeria-item"
+        *ngFor="let item of galleryItems"
+        (click)="openLightbox(item)"
+      >
+        <img [src]="item.imageUrl" [alt]="item.alt" />
+
+        <div class="galeria-overlay">
+          <h3>{{ item.title }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" [class.active]="selectedItem">
+    <button
+      class="lightbox-close"
+      type="button"
+      aria-label="Cerrar imagen"
+      (click)="closeLightbox()"
+    >
+      ×
+    </button>
+
+    <img
+      *ngIf="selectedItem"
+      [src]="selectedItem.imageUrl"
+      [alt]="selectedItem.alt"
+      class="lightbox-img"
+    />
+
+    <div class="lightbox-caption" *ngIf="selectedItem">
+      {{ selectedItem.title }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,151 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(8, 18, 26, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.35s ease, opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.navbar.show-navbar {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.navbar.scrolled {
+  background: rgba(8, 18, 26, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.nav-container {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  min-height: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo-text {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  width: 0;
+  height: 1px;
+  background: #d6b36a;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link-cta {
+  padding: 0.8rem 1.15rem;
+  border: 1px solid rgba(13, 66, 126, 0.55);
+  border-radius: 999px;
+  color: #d6b36a;
+}
+
+.nav-link-cta:hover {
+  background: rgba(214, 179, 106, 0.12);
+  color: #fff4dd;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.mobile-menu-btn span {
+  width: 24px;
+  height: 2px;
+  background: white;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 78px;
+    left: 0;
+    right: 0;
+    background: rgba(8, 18, 26, 0.96);
+    backdrop-filter: blur(12px);
+    padding: 1rem;
+    flex-direction: column;
+    gap: 2rem;
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links.active {
+    transform: translateY(0);
+  }
+}

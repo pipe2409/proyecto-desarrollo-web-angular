@@ -1,0 +1,161 @@
+.reservas-section {
+  background: #023047;
+  padding: 6rem 0;
+}
+
+.container-small {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #d6b36a;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  font-size: 1.25rem;
+  color: #f5efe3;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.reserva-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.reserva-header {
+  background: linear-gradient(135deg, #023047, #0b2942);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.5rem 2rem;
+}
+
+.reserva-header h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #d6b36a;
+  margin: 0;
+}
+
+.reserva-form {
+  padding: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #f5efe3;
+  margin-bottom: 0.45rem;
+  font-size: 0.9rem;
+}
+
+/* 🔥 INPUTS OSCUROS */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #d6b36a;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(214, 179, 106, 0.15);
+}
+
+/* 🔥 BOTÓN */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0.95rem 1.45rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-ocean {
+  background: linear-gradient(135deg, #d6b36a, #b99243);
+  color: #08121a;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ocean:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* 🔥 TEXTO FINAL */
+.form-note {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  margin-top: 1rem;
+}
+
+/* 🔥 ERRORES */
+.error-message {
+  display: block;
+  margin-top: 0.4rem;
+  color: #ff6b6b;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .reservas-section {
+    padding: 4rem 0;
+  }
+
+  .reserva-form {
+    padding: 1.4rem;
+  }
+
+  .reserva-header {
+    padding: 1.2rem 1.4rem;
+  }
+}

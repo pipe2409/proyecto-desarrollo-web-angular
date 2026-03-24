@@ -1,0 +1,26 @@
+<section id="testimonios" class="testimonios-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Lo Que Dicen Nuestros Huéspedes</h2>
+      <p class="section-description">
+        Experiencias reales de viajeros que eligieron Hotel Praia para sus vacaciones.
+      </p>
+    </div>
+
+    <div class="testimonios-grid">
+      <div class="testimonio-card" *ngFor="let testimonial of testimonials">
+        <div class="quote-icon">"</div>
+        <div class="estrellas">{{ testimonial.stars }}</div>
+
+        <p class="testimonio-texto">
+          "{{ testimonial.quote }}"
+        </p>
+
+        <div class="testimonio-autor">
+          <strong>{{ testimonial.author }}</strong>
+          <span>{{ testimonial.timeAgo }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

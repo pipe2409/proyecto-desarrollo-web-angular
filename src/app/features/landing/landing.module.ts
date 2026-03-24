@@ -1,0 +1,37 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { HeroComponent } from './components/hero/hero.component';
+import { RoomsComponent } from './components/rooms/rooms.component';
+import { ServicesComponent } from './components/services/services.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { ReservationComponent } from './components/reservation/reservation.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MapComponent } from './components/map/map.component';
+
+@NgModule({
+  declarations: [
+    HomeComponent,
+    NavbarComponent,
+    HeroComponent,
+    RoomsComponent,
+    ServicesComponent,
+    GalleryComponent,
+    TestimonialsComponent,
+    ReservationComponent,
+    FooterComponent,
+    MapComponent
+  ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    HomeComponent
+  ]
+})
+export class LandingModule {}

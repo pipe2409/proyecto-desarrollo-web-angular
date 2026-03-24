@@ -1,0 +1,52 @@
+<section id="servicios" class="services-editorial-section">
+  <div class="services-editorial-shell">
+    <div class="services-editorial-header">
+      <span class="services-kicker">EXPERIENCIAS PRAIA</span>
+      <h2 class="services-editorial-title">Servicios que trascienden</h2>
+      <p class="services-editorial-intro">
+        Espacios y experiencias pensados para elevar cada momento de tu estancia
+        con bienestar, sabor, movimiento y exclusividad.
+      </p>
+    </div>
+
+    <div class="services-editorial-layout">
+      <div class="services-tabs">
+        <article
+          class="service-tab"
+          *ngFor="let service of services"
+          [class.active]="isActive(service)"
+          (click)="setActiveService(service)"
+        >
+          <div class="service-tab-summary">
+            <h3>{{ service.title }}</h3>
+            <span>{{ service.subtitle }}</span>
+          </div>
+
+        </article>
+      </div>
+
+      <div class="services-panel">
+        <div class="services-panel-image">
+          <img
+            [src]="activeService.image"
+            [alt]="activeService.title"
+          />
+        </div>
+
+        <div class="services-panel-copy">
+          <p class="services-panel-subtitle">{{ activeService.subtitle }}</p>
+          <h3 class="services-panel-title">{{ activeService.title }}</h3>
+          <p class="services-panel-description">
+            {{ activeService.description }}
+          </p>
+
+          <ul class="services-panel-features">
+            <li *ngFor="let feature of activeService.features">
+              {{ feature }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

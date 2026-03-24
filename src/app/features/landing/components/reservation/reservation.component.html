@@ -1,0 +1,114 @@
+<section id="reservas" class="reservas-section">
+  <div class="container-small">
+    <div class="section-header">
+      <h2 class="section-title">Reserva Tu Estancia</h2>
+      <p class="section-description">
+        Completa el formulario y nos pondremos en contacto contigo para confirmar tu reserva.
+      </p>
+    </div>
+
+    <div class="reserva-card">
+      <div class="reserva-header">
+        <h3>Información de Reserva</h3>
+      </div>
+
+      <form class="reserva-form" [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="nombre">Nombre Completo *</label>
+          <input
+            id="nombre"
+            type="text"
+            formControlName="nombre"
+            placeholder="Tu nombre"
+          />
+          <small class="error-message" *ngIf="submitted && f['nombre'].invalid">
+            Este campo es obligatorio.
+          </small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="tu@email.com"
+            />
+            <small class="error-message" *ngIf="submitted && f['email'].invalid">
+              Ingresa un correo válido.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input
+              id="telefono"
+              type="tel"
+              formControlName="telefono"
+              placeholder="+57"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fechaEntrada">Fecha de Entrada *</label>
+            <input
+              id="fechaEntrada"
+              type="date"
+              formControlName="fechaEntrada"
+            />
+            <small class="error-message" *ngIf="submitted && f['fechaEntrada'].invalid">
+              Selecciona una fecha.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="fechaSalida">Fecha de Salida *</label>
+            <input
+              id="fechaSalida"
+              type="date"
+              formControlName="fechaSalida"
+            />
+            <small class="error-message" *ngIf="submitted && f['fechaSalida'].invalid">
+              Selecciona una fecha.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="personas">Número de Personas</label>
+            <select id="personas" formControlName="personas">
+              <option value="1">1 Persona</option>
+              <option value="2">2 Personas</option>
+              <option value="3">3 Personas</option>
+              <option value="4">4 Personas</option>
+              <option value="5">5 Personas</option>
+              <option value="6">6+ Personas</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="habitacion">Tipo de Habitación</label>
+            <select id="habitacion" formControlName="habitacion">
+              <option value="estandar">Habitación Estándar</option>
+              <option value="vista-mar">Habitación Vista al Mar</option>
+              <option value="suite">Suite de Lujo</option>
+              <option value="presidencial">Suite Presidencial</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-block btn-ocean">
+          Solicitar Reserva
+        </button>
+
+        <p class="form-note">
+          * Campos obligatorios. Nos pondremos en contacto contigo en menos de 24 horas.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
