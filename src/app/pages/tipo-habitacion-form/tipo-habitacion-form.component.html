@@ -1,0 +1,123 @@
+<header class="border-b border-slate-800 bg-slate-950/70 backdrop-blur text-slate-100">
+  <div class="mx-auto max-w-3xl px-4 py-5 flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-semibold">
+        {{ editing ? 'Editar tipo de habitación' : 'Crear tipo de habitación' }}
+      </h1>
+      <p class="text-sm text-slate-400">Completa los campos y guarda.</p>
+    </div>
+
+    <button
+      type="button"
+      (click)="cancel()"
+      class="rounded-lg border border-slate-800 px-4 py-2 text-sm hover:bg-slate-900">
+      Volver
+    </button>
+  </div>
+</header>
+
+<main class="mx-auto max-w-3xl px-4 py-8 text-slate-100">
+  <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
+
+      <div *ngIf="editing" class="text-xs text-slate-400">
+        ID: <span class="font-mono">{{ roomId }}</span>
+      </div>
+
+      <div>
+        <label class="block text-sm text-slate-300 mb-1">Nombre</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+          placeholder="Ej: Suite Presidencial">
+      </div>
+
+      <div>
+        <label class="block text-sm text-slate-300 mb-1">Descripción</label>
+        <textarea
+          formControlName="description"
+          rows="3"
+          class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+          placeholder="Descripción breve..."></textarea>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Precio (COP) por noche</label>
+          <input
+            type="number"
+            formControlName="price"
+            min="0"
+            class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+            placeholder="180000">
+        </div>
+
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Capacidad (personas)</label>
+          <input
+            type="number"
+            formControlName="capacity"
+            min="1"
+            class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+            placeholder="2">
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Camas</label>
+          <input
+            type="text"
+            formControlName="beds"
+            class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+            placeholder="1 King / 2 Dobles">
+        </div>
+
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Disponible</label>
+          <select
+            formControlName="available"
+            class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500">
+            <option [ngValue]="true">Sí</option>
+            <option [ngValue]="false">No</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm text-slate-300 mb-1">URL de imagen</label>
+        <input
+          type="text"
+          formControlName="imageUrl"
+          class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+          placeholder="https://...">
+      </div>
+
+      <div>
+        <label class="block text-sm text-slate-300 mb-1">Amenities (separados por coma)</label>
+        <input
+          type="text"
+          formControlName="amenities"
+          class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"
+          placeholder="WiFi, TV, Aire, Jacuzzi">
+      </div>
+
+      <div class="pt-2 flex gap-2">
+        <button
+          type="submit"
+          class="rounded-xl bg-sky-600 px-5 py-2 text-sm font-medium hover:bg-sky-500">
+          Guardar
+        </button>
+
+        <button
+          type="button"
+          (click)="cancel()"
+          class="rounded-xl border border-slate-800 px-5 py-2 text-sm hover:bg-slate-900">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

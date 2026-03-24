@@ -1,11 +1,11 @@
-
 export interface TipoHabitacion {
-    id: number;
+  id: number;
   name: string;
   description: string;
   price: number;
   imageUrl: string;
-  capacity: string;
+  capacity: number;
   beds: string;
   amenities: string[];
+  available: boolean;
 }
