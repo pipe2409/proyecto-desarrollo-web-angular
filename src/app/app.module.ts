@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { LandingModule } from './features/landing/landing.module';
 import { TiposHabitacionAdminComponent } from './pages/tipos-habitacion-admin/tipos-habitacion-admin.component';
 import { TipoHabitacionFormComponent } from './pages/tipo-habitacion-form/tipo-habitacion-form.component';
+import { TestimonialsCardsComponent } from './features/landing/components/testimonials/testimonials-cards/testimonials-cards.component';
+
 
 @NgModule({
   declarations: [

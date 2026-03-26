@@ -8,19 +8,10 @@
     </div>
 
     <div class="testimonios-grid">
-      <div class="testimonio-card" *ngFor="let testimonial of testimonials">
-        <div class="quote-icon">"</div>
-        <div class="estrellas">{{ testimonial.stars }}</div>
-
-        <p class="testimonio-texto">
-          "{{ testimonial.quote }}"
-        </p>
-
-        <div class="testimonio-autor">
-          <strong>{{ testimonial.author }}</strong>
-          <span>{{ testimonial.timeAgo }}</span>
-        </div>
-      </div>
-    </div>
+      <app-testimonials-cards
+        *ngFor="let testimonial of testimonials"
+        [testimonial]="testimonial"
+      ></app-testimonials-cards>
   </div>
+  </div>  
 </section>

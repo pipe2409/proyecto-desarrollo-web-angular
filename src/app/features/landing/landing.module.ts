@@ -12,6 +12,7 @@ import { ReservationComponent } from './components/reservation/reservation.compo
 import { FooterComponent } from './components/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MapComponent } from './components/map/map.component';
+import { TestimonialsCardsComponent } from './components/testimonials/testimonials-cards/testimonials-cards.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MapComponent } from './components/map/map.component';
     TestimonialsComponent,
     ReservationComponent,
     FooterComponent,
-    MapComponent
+    MapComponent,
+    TestimonialsCardsComponent
   ],
   imports: [
     CommonModule,
