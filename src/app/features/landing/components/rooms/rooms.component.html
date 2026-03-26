@@ -13,8 +13,11 @@
         <article
           class="habitacion-slide"
           *ngFor="let room of rooms; let i = index"
-          [class.is-active]="i === 1 || rooms.length === 1"
-        >
+          [class.is-active]="i === activeIndex"
+          (click)="activeIndex = i"
+          
+
+          >
           <div class="habitacion-slide__image">
             <img
               [src]="room.imageUrl"
