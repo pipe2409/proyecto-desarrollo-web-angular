@@ -47,7 +47,7 @@ export const SERVICES_DATA: Servicio[] = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     title: 'Playa privada',
     subtitle: 'Exclusividad Junto al mar',
     description:
