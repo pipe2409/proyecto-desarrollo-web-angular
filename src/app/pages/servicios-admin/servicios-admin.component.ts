@@ -1,21 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Servicio } from '../../modelo/servicio';
+import { SERVICES_DATA } from '../../features/landing/data/servicio.data';
 
 @Component({
   selector: 'app-servicios-admin',
   templateUrl: './servicios-admin.component.html',
 })
-export class ServiciosAdminComponent implements OnInit {
-  servicios: Servicio[] = [];
+export class ServiciosAdminComponent {
+  servicios: Servicio[] = SERVICES_DATA; // ← así de simple
 
   constructor(private router: Router) {}
-
-  ngOnInit() {
-    // Aquí luego conectas tu servicio HTTP
-    this.servicios = [ /* datos de prueba o llamada al backend */ ];
-  }
 
   goToCreate() {
     this.router.navigate(['/servicios/crear']);
