@@ -9,7 +9,7 @@ import { TiposHabitacionAdminComponent } from './pages/tipos-habitacion-admin/ti
 import { TipoHabitacionFormComponent } from './pages/tipo-habitacion-form/tipo-habitacion-form.component';
 import { TestimonialsCardsComponent } from './features/landing/components/testimonials/testimonials-cards/testimonials-cards.component';
 import { ServiciosAdminComponent } from './pages/servicios-admin/servicios-admin.component';
-import { ServiciosFormsComponent } from './pages/servicios-forms/servicios-forms.component';
+import { ServicioFormComponent } from './pages/servicios-form/servicios-form.component';
 
 
 
@@ -19,7 +19,7 @@ import { ServiciosFormsComponent } from './pages/servicios-forms/servicios-forms
     TiposHabitacionAdminComponent,
     TipoHabitacionFormComponent,
     ServiciosAdminComponent,
-    ServiciosFormsComponent
+    ServicioFormComponent
   ],
   imports: [
     BrowserModule,

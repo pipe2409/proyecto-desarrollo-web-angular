@@ -14,12 +14,12 @@ export class ServiciosAdminComponent {
   constructor(private router: Router) {}
 
   goToCreate() {
-    this.router.navigate(['/servicios/crear']);
-  }
+  this.router.navigate(['/servicios/admin/nuevo']);
+}
 
-  goToEdit(id: number) {
-    this.router.navigate(['/servicios/editar', id]);
-  }
+goToEdit(id: number) {
+  this.router.navigate(['/servicios/admin/editar', id]);
+}
 
   deleteServicio(id: number) {
     this.servicios = this.servicios.filter(s => s.id !== id);
