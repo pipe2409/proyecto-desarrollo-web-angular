@@ -3,10 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './features/landing/pages/home/home.component';
 import { TiposHabitacionAdminComponent } from './pages/tipos-habitacion-admin/tipos-habitacion-admin.component';
 import { TipoHabitacionFormComponent } from './pages/tipo-habitacion-form/tipo-habitacion-form.component';
+import { ServiciosAdminComponent } from './pages/servicios-admin/servicios-admin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'tipos-habitacion', component: TiposHabitacionAdminComponent },
+  { path: 'tipos-habitacion/nuevo', component: TipoHabitacionFormComponent },
+  { path: 'tipos-habitacion/editar/:id', component: TipoHabitacionFormComponent },
+  { path: 'servicios/admin', component: ServiciosAdminComponent },
   { path: 'tipos-habitacion/nuevo', component: TipoHabitacionFormComponent },
   { path: 'tipos-habitacion/editar/:id', component: TipoHabitacionFormComponent }
 ];
