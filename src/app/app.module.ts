@@ -8,13 +8,18 @@ import { LandingModule } from './features/landing/landing.module';
 import { TiposHabitacionAdminComponent } from './pages/tipos-habitacion-admin/tipos-habitacion-admin.component';
 import { TipoHabitacionFormComponent } from './pages/tipo-habitacion-form/tipo-habitacion-form.component';
 import { TestimonialsCardsComponent } from './features/landing/components/testimonials/testimonials-cards/testimonials-cards.component';
+import { ServiciosAdminComponent } from './pages/servicios-admin/servicios-admin.component';
+import { ServiciosFormsComponent } from './pages/servicios-forms/servicios-forms.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TiposHabitacionAdminComponent,
-    TipoHabitacionFormComponent
+    TipoHabitacionFormComponent,
+    ServiciosAdminComponent,
+    ServiciosFormsComponent
   ],
   imports: [
     BrowserModule,
