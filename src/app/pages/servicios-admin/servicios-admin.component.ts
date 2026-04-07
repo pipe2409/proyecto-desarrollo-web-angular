@@ -1,27 +1,34 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Servicio } from '../../modelo/servicio';
-import { SERVICES_DATA } from '../../features/landing/data/servicio.data';
+import { ServiciosService } from '../../services/servicios.service';
 
 @Component({
   selector: 'app-servicios-admin',
   templateUrl: './servicios-admin.component.html',
 })
-export class ServiciosAdminComponent {
-  servicios: Servicio[] = SERVICES_DATA; // ← así de simple
+export class ServiciosAdminComponent implements OnInit {
+  servicios: Servicio[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private serviciosService: ServiciosService
+  ) {}
 
-  goToCreate() {
-  this.router.navigate(['/servicios/admin/nuevo']);
-}
+  ngOnInit(): void {
+    this.servicios = this.serviciosService.getAll();
+  }
 
-goToEdit(id: number) {
-  this.router.navigate(['/servicios/admin/editar', id]);
-}
+  goToCreate(): void {
+    this.router.navigate(['/servicios/admin/nuevo']);
+  }
 
-  deleteServicio(id: number) {
-    this.servicios = this.servicios.filter(s => s.id !== id);
+  goToEdit(id: number): void {
+    this.router.navigate(['/servicios/admin/editar', id]);
+  }
+
+  deleteServicio(id: number): void {
+    this.serviciosService.delete(id);
+    this.servicios = this.serviciosService.getAll();
   }
 }

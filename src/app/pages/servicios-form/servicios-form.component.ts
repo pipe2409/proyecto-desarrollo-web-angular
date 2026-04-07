@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Servicio } from '../../modelo/servicio';
-import { SERVICES_DATA } from '../../features/landing/data/servicio.data';
+import { ServiciosService } from '../../services/servicios.service';
 
 @Component({
   selector: 'app-servicio-form',
@@ -13,55 +13,67 @@ export class ServicioFormComponent implements OnInit {
   servicioId: number | null = null;
 
   form = new FormGroup({
-    title:       new FormControl('', Validators.required),
-    subtitle:    new FormControl('', Validators.required),
+    title: new FormControl('', Validators.required),
+    subtitle: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    image:       new FormControl('', Validators.required),
-    features:    new FormControl('', Validators.required),
+    image: new FormControl('', Validators.required),
+    features: new FormControl('', Validators.required),
   });
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private serviciosService: ServiciosService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+
     if (id) {
       this.editing = true;
       this.servicioId = +id;
 
-      const servicio = SERVICES_DATA.find(s => s.id === +id);
+      const servicio = this.serviciosService.getById(+id);
+
       if (servicio) {
         this.form.setValue({
-          title:       servicio.title,
-          subtitle:    servicio.subtitle,
+          title: servicio.title,
+          subtitle: servicio.subtitle,
           description: servicio.description,
-          image:       servicio.image,
-          features:    servicio.features.join(', '),
+          image: servicio.image,
+          features: servicio.features.join(', '),
         });
       }
     }
   }
 
-  save() {
+  save(): void {
     if (this.form.invalid) return;
 
     const valor = this.form.value;
+
     const servicio: Servicio = {
-      id:          this.servicioId ?? Date.now(),
-      title:       valor.title!,
-      subtitle:    valor.subtitle!,
-      description: valor.description!,
-      image:       valor.image!,
-      features:    valor.features!.split(',').map(f => f.trim()),
+      id: this.servicioId ?? Date.now(),
+      title: valor.title ?? '',
+      subtitle: valor.subtitle ?? '',
+      description: valor.description ?? '',
+      image: valor.image ?? '',
+      features: (valor.features ?? '')
+        .split(',')
+        .map(f => f.trim())
+        .filter(f => f.length > 0),
     };
 
-    console.log('Servicio guardado:', servicio);
-    this.router.navigate(['/servicios']);
+    if (this.editing && this.servicioId !== null) {
+      this.serviciosService.update(this.servicioId, servicio);
+    } else {
+      this.serviciosService.create(servicio);
+    }
+
+    this.router.navigate(['/servicios/admin']);
   }
 
-  cancel() {
-  this.router.navigate(['/servicios/admin']);
-}
+  cancel(): void {
+    this.router.navigate(['/servicios/admin']);
+  }
 }
