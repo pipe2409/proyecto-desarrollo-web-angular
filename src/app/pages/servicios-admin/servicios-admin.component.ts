@@ -15,8 +15,17 @@ export class ServiciosAdminComponent implements OnInit {
     private serviciosService: ServiciosService
   ) {}
 
+
   ngOnInit(): void {
-    this.servicios = this.serviciosService.getAll();
+    this.loadServicios();
+  } 
+
+  // 👇 método reutilizable para cargar la lista
+  loadServicios(): void {
+    this.serviciosService.getAll().subscribe({
+      next: (data) => this.servicios = data,
+      error: (err) => console.error('Error cargando servicios:', err)
+    });
   }
 
   goToCreate(): void {
@@ -28,7 +37,10 @@ export class ServiciosAdminComponent implements OnInit {
   }
 
   deleteServicio(id: number): void {
-    this.serviciosService.delete(id);
-    this.servicios = this.serviciosService.getAll();
+    // 👇 primero elimina, y solo cuando el backend confirma recarga la lista
+    this.serviciosService.delete(id).subscribe({
+      next: () => this.loadServicios(),
+      error: (err) => console.error('Error eliminando:', err)
+    });
   }
 }
