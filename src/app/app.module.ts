@@ -10,6 +10,7 @@ import { TipoHabitacionFormComponent } from './pages/tipo-habitacion-form/tipo-h
 import { TestimonialsCardsComponent } from './features/landing/components/testimonials/testimonials-cards/testimonials-cards.component';
 import { ServiciosAdminComponent } from './pages/servicios-admin/servicios-admin.component';
 import { ServicioFormComponent } from './pages/servicios-form/servicios-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -25,7 +26,8 @@ import { ServicioFormComponent } from './pages/servicios-form/servicios-form.com
     BrowserModule,
     AppRoutingModule,
     LandingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
