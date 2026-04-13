@@ -1,11 +1,82 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TipoHabitacion } from '../modelo/tipo-habitacion';
-import { ROOMS_DATA } from '../features/landing/data/tipos-habitacion.data';
+import { environment } from '../../environments/environment';
+//import { ROOMS_DATA } from '../features/landing/data/tipos-habitacion.data';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TipoHabitacionService {
+
+  private apiUrl = `${environment.apiUrl}/api/tipos-habitacion`;
+
+  constructor(private http: HttpClient) {}
+
+  // 👇 mapea los campos del backend a los campos que usa Angular
+  private mapear(item: any): TipoHabitacion {
+    return {
+      id:          item.id,
+      name:        item.nombre,
+      description: item.descripcion,
+      price:       item.precio,
+      imageUrl:    item.imagenUrl,
+      capacity:    item.capacidad,
+      beds:        item.camas,
+      amenities:   item.amenities
+                    ? item.amenities.split(',').map((a: string) => a.trim())
+                    : [],
+      available:   true  // 👈 el backend no envía este campo, se asume true por defecto
+    };
+  }
+
+  getAll(): Observable<TipoHabitacion[]> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(items => items.map(item => this.mapear(item)))
+    );
+  }
+
+  getById(id: number): Observable<TipoHabitacion> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      map(item => this.mapear(item))
+    );
+  }
+
+  create(room: TipoHabitacion): Observable<TipoHabitacion> {
+    return this.http.post<any>(this.apiUrl, this.desmapear(room)).pipe(
+      map(item => this.mapear(item))
+    );
+  }
+
+  update(id: number, room: TipoHabitacion): Observable<TipoHabitacion> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, this.desmapear(room)).pipe(
+      map(item => this.mapear(item))
+    );
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // 👇 convierte los campos de Angular al formato que espera el backend
+  private desmapear(room: TipoHabitacion): any {
+    return {
+      nombre:      room.name,
+      descripcion: room.description,
+      precio:      room.price,
+      imagenUrl:   room.imageUrl,
+      capacidad:   room.capacity,
+      camas:       room.beds,
+      amenities:   Array.isArray(room.amenities)
+                    ? room.amenities.join(', ')
+                    : room.amenities
+    };
+  }
+
+  /*
   private rooms: TipoHabitacion[] = [...ROOMS_DATA];
 
   getAll(): TipoHabitacion[] {
@@ -37,5 +108,5 @@ export class TipoHabitacionService {
 
   delete(id: number): void {
     this.rooms = this.rooms.filter(room => room.id !== id);
-  }
+  }*/
 }

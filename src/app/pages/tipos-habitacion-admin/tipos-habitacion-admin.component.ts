@@ -21,7 +21,10 @@ export class TiposHabitacionAdminComponent implements OnInit {
   }
 
   loadRooms(): void {
-    this.rooms = this.tipoHabitacionService.getAll();
+    this.tipoHabitacionService.getAll().subscribe({
+      next: (data) => this.rooms = data,
+      error: (err) => console.error('Error cargando habitaciones:', err)
+    });
   }
 
   goToCreate(): void {
@@ -35,8 +38,17 @@ export class TiposHabitacionAdminComponent implements OnInit {
   deleteRoom(id: number): void {
     const ok = confirm('¿Eliminar este tipo de habitación?');
     if (ok) {
-      this.tipoHabitacionService.delete(id);
-      this.loadRooms();
+      this.tipoHabitacionService.delete(id).subscribe({
+        next: () => this.loadRooms(), // 👈 recarga la lista cuando el backend confirma
+        error: (err) => {
+          // 👇 muestra el mensaje de error si hay habitaciones asignadas (409 CONFLICT)
+          if (err.status === 409) {
+            alert(err.error?.err || 'No se puede eliminar este tipo de habitación.');
+          } else {
+            console.error('Error eliminando:', err);
+          }
+        }
+      });
     }
   }
 }
