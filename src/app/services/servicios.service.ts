@@ -6,7 +6,6 @@ import { SERVICES_DATA } from '../features/landing/data/servicio.data';
   providedIn: 'root'
 })
 export class ServiciosService {
-
   private servicios = SERVICES_DATA;
 
   constructor() {}
