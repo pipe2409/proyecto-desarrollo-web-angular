@@ -84,4 +84,14 @@ export class ServiciosService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  // Verificar si un servicio está asociado a una reserva
+  verificarAsociacion(id: number): Observable<{ asociado: boolean; reservas?: number }> {
+    return this.http.get<any>(`${this.apiUrl}/${id}/verificar-asociacion`).pipe(
+      map(response => ({
+        asociado: response.asociado || response.reservasCount > 0,
+        reservas: response.reservasCount
+      }))
+    );
+  }
 }
