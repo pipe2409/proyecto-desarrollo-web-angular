@@ -33,15 +33,14 @@ export class ServicioFormComponent implements OnInit {
       this.editing = true;
       this.servicioId = +id;
 
-      // 👇 ahora usamos subscribe porque getById retorna Observable
       this.serviciosService.getById(+id).subscribe({
-        next: (servicio) => {
+        next: (servicio: Servicio) => {
           this.form.setValue({
             title: servicio.title,
             subtitle: servicio.subtitle,
             description: servicio.description,
             image: servicio.image,
-            features: servicio.features.join(', '),
+            features: servicio.features.join(', '), // Convertir array a string
           });
         },
         error: (err) => console.error('Error cargando servicio:', err)
@@ -55,7 +54,7 @@ export class ServicioFormComponent implements OnInit {
     const valor = this.form.value;
 
     const servicio: Servicio = {
-      id: this.servicioId ?? 0, // 👈 el backend asigna el id real, 0 es placeholder
+      id: this.servicioId ?? 0,
       title: valor.title ?? '',
       subtitle: valor.subtitle ?? '',
       description: valor.description ?? '',
@@ -67,13 +66,11 @@ export class ServicioFormComponent implements OnInit {
     };
 
     if (this.editing && this.servicioId !== null) {
-      // 👇 update ahora retorna Observable, hay que suscribirse
       this.serviciosService.update(this.servicioId, servicio).subscribe({
         next: () => this.router.navigate(['/servicios/admin']),
         error: (err) => console.error('Error actualizando:', err)
       });
     } else {
-      // 👇 igual con create
       this.serviciosService.create(servicio).subscribe({
         next: () => this.router.navigate(['/servicios/admin']),
         error: (err) => console.error('Error creando:', err)

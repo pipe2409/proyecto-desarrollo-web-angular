@@ -1,5 +1,4 @@
-import {TipoHabitacion} from './tipo-habitacion';
-
+import { TipoHabitacion } from './tipo-habitacion';
 export class Habitacion {
 
   id?: number;
@@ -26,3 +25,4 @@ export class Habitacion {
   }
 
 }
+export { TipoHabitacion } from './tipo-habitacion';

@@ -1,37 +1,87 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import { Servicio } from '../modelo/servicio';
-import { SERVICES_DATA } from '../features/landing/data/servicio.data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiciosService {
-  private servicios = SERVICES_DATA;
-  constructor() {}
+  private apiUrl = 'http://localhost:8080/api/servicios';
 
-  getAll(): Servicio[] {
-    return this.servicios;
+  constructor(private http: HttpClient) {}
+
+  getAll(): Observable<Servicio[]> {
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(backendServicios => backendServicios.map(bs => ({
+        id: bs.id,
+        title: bs.nombre,
+        subtitle: bs.descripcion,
+        description: bs.descripcion,
+        image: bs.imagenUrl,
+        features: bs.horario ? [bs.horario] : [] // o convertir horario en array
+      })))
+    );
   }
 
-  getById(id: number): Servicio | undefined {
-    return this.servicios.find(s => s.id === id);
+  getById(id: number): Observable<Servicio> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      map(bs => ({
+        id: bs.id,
+        title: bs.nombre,
+        subtitle: bs.descripcion,
+        description: bs.descripcion,
+        image: bs.imagenUrl,
+        features: bs.horario ? [bs.horario] : []
+      }))
+    );
   }
 
-  create(servicio: Servicio): void {
-    this.servicios.push(servicio);
+  create(servicio: Servicio): Observable<Servicio> {
+    const backendServicio = {
+      nombre: servicio.title,
+      descripcion: servicio.subtitle,
+      precio: 0, // necesitas agregar un campo precio en tu formulario
+      imagenUrl: servicio.image,
+      capacidad: 1,
+      precioTipo: 'Por persona',
+      horario: servicio.features.join(', ')
+    };
+    return this.http.post<any>(this.apiUrl, backendServicio).pipe(
+      map(bs => ({
+        id: bs.id,
+        title: bs.nombre,
+        subtitle: bs.descripcion,
+        description: bs.descripcion,
+        image: bs.imagenUrl,
+        features: bs.horario ? [bs.horario] : []
+      }))
+    );
   }
 
-  update(id: number, servicioActualizado: Servicio): void {
-    const index = this.servicios.findIndex(s => s.id === id);
-    if (index !== -1) {
-      this.servicios[index] = servicioActualizado;
-    }
+  update(id: number, servicio: Servicio): Observable<Servicio> {
+    const backendServicio = {
+      nombre: servicio.title,
+      descripcion: servicio.subtitle,
+      precio: 0,
+      imagenUrl: servicio.image,
+      capacidad: 1,
+      precioTipo: 'Por persona',
+      horario: servicio.features.join(', ')
+    };
+    return this.http.put<any>(`${this.apiUrl}/${id}`, backendServicio).pipe(
+      map(bs => ({
+        id: bs.id,
+        title: bs.nombre,
+        subtitle: bs.descripcion,
+        description: bs.descripcion,
+        image: bs.imagenUrl,
+        features: bs.horario ? [bs.horario] : []
+      }))
+    );
   }
 
-  delete(id: number): void {
-    const index = this.servicios.findIndex(s => s.id === id);
-    if (index !== -1) {
-      this.servicios.splice(index, 1);
-    }
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

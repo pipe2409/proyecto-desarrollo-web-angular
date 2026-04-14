@@ -1,0 +1,76 @@
+<div class="bg-slate-950 text-slate-100 min-h-screen">
+  <header class="border-b border-slate-800 bg-slate-950/70">
+    <div class="mx-auto max-w-3xl px-4 py-5 flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-semibold">{{ modo === 'crear' ? 'Crear habitación' : 'Editar habitación' }}</h1>
+        <p class="text-sm text-slate-400">Selecciona un tipo y guarda.</p>
+      </div>
+      <button (click)="cancelar()" class="rounded-lg border border-slate-800 px-4 py-2 text-sm hover:bg-slate-900">
+        Volver
+      </button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-4 py-8">
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
+      
+      <!-- Cargando -->
+      <div *ngIf="cargando" class="text-center py-8">
+        <div class="spinner mx-auto"></div>
+        <p class="text-slate-400 mt-2">Cargando...</p>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error" class="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+        {{ error }}
+      </div>
+
+      <!-- Formulario -->
+      <form *ngIf="!cargando" [formGroup]="form" (ngSubmit)="guardar()" class="space-y-4">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Código / Número</label>
+            <input formControlName="codigo" required placeholder="101 / PH-01" class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500" />
+            <div *ngIf="form.get('codigo')?.invalid && form.get('codigo')?.touched" class="text-xs text-rose-400 mt-1">Campo requerido</div>
+          </div>
+
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Piso</label>
+            <input formControlName="piso" type="number" min="0" required placeholder="1" class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500" />
+            <div *ngIf="form.get('piso')?.invalid && form.get('piso')?.touched" class="text-xs text-rose-400 mt-1">Campo requerido</div>
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Estado</label>
+            <select formControlName="estado" class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500">
+              <option value="DISPONIBLE">DISPONIBLE</option>
+              <option value="OCUPADA">OCUPADA</option>
+              <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Tipo de habitación</label>
+            <select formControlName="tipoHabitacionId" required class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500">
+              <option [ngValue]="null" disabled>Selecciona un tipo</option>
+              <option *ngFor="let t of tiposHabitacion" [ngValue]="t.id">{{ t.name }}</option>
+            </select>
+            <div *ngIf="form.get('tipoHabitacionId')?.invalid && form.get('tipoHabitacionId')?.touched" class="text-xs text-rose-400 mt-1">Campo requerido</div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Notas</label>
+          <textarea formControlName="notas" rows="3" placeholder="Opcional..." class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500"></textarea>
+        </div>
+
+        <div class="pt-2 flex gap-2">
+          <button type="submit" class="rounded-xl bg-sky-600 px-5 py-2 text-sm font-medium hover:bg-sky-500">Guardar</button>
+          <button type="button" (click)="cancelar()" class="rounded-xl border border-slate-800 px-5 py-2 text-sm hover:bg-slate-900">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>

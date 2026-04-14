@@ -8,6 +8,9 @@ import { ServicioFormComponent } from './pages/servicios-form/servicios-form.com
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
+import { ServiciosPublicComponent } from './pages/servicios-public/servicios-public.component';
+import { HabitacionesAdminComponent } from './pages/habitaciones-admin/habitaciones-admin.component';
+import { HabitacionesFormComponent } from './pages/habitaciones-form/habitaciones-form.component';
 
 
 const routes: Routes = [
@@ -19,6 +22,13 @@ const routes: Routes = [
   { path: 'tipos-habitacion', component: TiposHabitacionAdminComponent },
   { path: 'tipos-habitacion/nuevo', component: TipoHabitacionFormComponent },
   { path: 'tipos-habitacion/editar/:id', component: TipoHabitacionFormComponent },
+  
+  { path: 'servicios', component: ServiciosPublicComponent },
+
+  { path: 'habitaciones/admin', component: HabitacionesAdminComponent },
+  { path: 'habitaciones/admin/nuevo', component: HabitacionesFormComponent },
+  { path: 'habitaciones/admin/editar/:id', component: HabitacionesFormComponent },
+
 
   { path: 'servicios/admin', component: ServiciosAdminComponent },
   { path: 'servicios/admin/nuevo', component: ServicioFormComponent },

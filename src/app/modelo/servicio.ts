@@ -1,9 +1,8 @@
-
 export interface Servicio {
-id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  features: string[];
+  id: number;
+  title: string;        
+  subtitle: string;     
+  description: string;  
+  image: string;        
+  features: string[];   
 }

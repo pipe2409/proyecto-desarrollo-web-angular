@@ -1,0 +1,106 @@
+<div class="bg-slate-950 text-slate-100 min-h-screen">
+  <!-- NAVBAR ADMIN -->
+  <nav class="border-b border-slate-800 bg-slate-950/95 backdrop-blur sticky top-0 z-50">
+    <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between gap-4 flex-wrap">
+      <div class="flex items-center gap-3">
+        <img src="assets/images/logoPraia.png" alt="Hotel Praia" class="w-11 h-11 rounded-xl bg-white p-1 object-contain" />
+        <span class="text-lg font-semibold tracking-tight text-white">Hotel Praia · Admin</span>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap text-sm">
+        <a routerLink="/habitaciones/admin" class="rounded-lg bg-slate-800 px-3 py-2 text-white transition">Habitaciones</a>
+        <a routerLink="/tipos-habitacion/admin" class="rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800 transition">Tipos de Habitación</a>
+        <a routerLink="/servicios/admin" class="rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800 transition">Servicios</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="border-b border-slate-800 bg-slate-950/70">
+    <div class="mx-auto max-w-6xl px-4 py-5 flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-semibold tracking-tight">Habitaciones (Admin)</h1>
+        <p class="text-sm text-slate-400">CRUD de habitaciones reales (con tipo asociado)</p>
+      </div>
+      <button (click)="crearHabitacion()" class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium hover:bg-sky-500">
+        + Crear habitación
+      </button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    <!-- Mensajes -->
+    <div *ngIf="okMessage" class="mb-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+      {{ okMessage }}
+    </div>
+    <div *ngIf="errMessage" class="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+      {{ errMessage }}
+    </div>
+
+    <!-- Filtro -->
+    <section class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Filtrar por tipo</label>
+          <select [(ngModel)]="tipoIdSeleccionado" (change)="filtrarPorTipo()" class="w-full sm:w-80 rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500">
+            <option [ngValue]="null">Todas</option>
+            <option *ngFor="let t of tiposHabitacion" [ngValue]="t.id">{{ t.name }}</option>
+          </select>
+        </div>
+        <div class="flex gap-2">
+          <button (click)="filtrarPorTipo()" class="rounded-xl bg-slate-100 px-5 py-2 text-sm font-medium text-slate-900 hover:bg-white">Aplicar</button>
+          <button (click)="limpiarFiltro()" class="rounded-xl border border-slate-800 px-5 py-2 text-sm hover:bg-slate-900">Limpiar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cargando -->
+    <div *ngIf="cargando" class="text-center py-12">
+      <div class="spinner mx-auto"></div>
+      <p class="text-slate-400 mt-2">Cargando habitaciones...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="text-center py-12 text-rose-400">{{ error }}</div>
+
+    <!-- Tabla -->
+    <section *ngIf="!cargando && !error" class="mt-6 rounded-2xl border border-slate-800 bg-slate-900/40 overflow-hidden">
+      <div class="px-5 py-4 flex items-center justify-between border-b border-slate-800">
+        <h2 class="text-lg font-semibold">Listado</h2>
+        <div class="text-sm text-slate-400">Total: {{ habitaciones.length }}</div>
+      </div>
+
+      <div class="overflow-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-slate-950/60 text-slate-300">
+            <tr>
+              <th class="text-left px-5 py-3">Código</th>
+              <th class="text-left px-5 py-3">Piso</th>
+              <th class="text-left px-5 py-3">Estado</th>
+              <th class="text-left px-5 py-3">Tipo</th>
+              <th class="text-right px-5 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800">
+            <tr *ngFor="let h of habitaciones">
+              <td class="px-5 py-3 font-medium">{{ h.codigo }}</td>
+              <td class="px-5 py-3">{{ h.piso }}</td>
+              <td class="px-5 py-3">
+<span class="rounded-full px-3 py-1 text-xs font-medium border" [ngClass]="getEstadoClass(h.estado || '')">                  {{ h.estado }}
+                </span>
+              </td>
+              <td class="px-5 py-3">{{ h.tipoHabitacion?.name || 'Sin tipo' }}</td>
+              <td class="px-5 py-3">
+                <div class="flex justify-end gap-2">
+                  <button (click)="editarHabitacion(h.id!)" class="rounded-lg border border-slate-800 px-3 py-2 text-xs hover:bg-slate-900">Editar</button>
+<button (click)="eliminarHabitacion(h.id!)" class="rounded-lg border border-slate-800 px-3 py-2 text-xs hover:bg-slate-900">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="habitaciones.length === 0">
+              <td class="px-5 py-8 text-center text-slate-400" colspan="5">No hay habitaciones para mostrar.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>

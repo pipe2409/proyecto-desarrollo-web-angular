@@ -13,6 +13,9 @@ export class TipoHabitacionFormComponent implements OnInit {
   form!: FormGroup;
   editing = false;
   roomId!: number;
+  guardando = false;
+  errorMessage = '';
+  successMessage = '';
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +58,7 @@ export class TipoHabitacionFormComponent implements OnInit {
   save(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.errorMessage = 'Completa todos los campos requeridos';
       return;
     }
 
@@ -68,24 +72,44 @@ export class TipoHabitacionFormComponent implements OnInit {
       imageUrl:    value.imageUrl,
       capacity:    Number(value.capacity),
       beds:        value.beds,
+      available:   value.available || true,
       amenities:   value.amenities
                     .split(',')
                     .map((item: string) => item.trim())
                     .filter((item: string) => item.length > 0),
-      available:   value.available
     };
 
+    this.guardando = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    console.log('Enviando:', room);
+
     if (this.editing) {
-      // 👇 update ahora retorna Observable
       this.tipoHabitacionService.update(this.roomId, room).subscribe({
-        next: () => this.router.navigate(['/tipos-habitacion']),
-        error: (err) => console.error('Error actualizando:', err)
+        next: (response) => {
+          console.log('Actualizado exitosamente:', response);
+          this.successMessage = 'Tipo de habitación actualizado correctamente';
+          setTimeout(() => this.router.navigate(['/tipos-habitacion/admin']), 1500);
+        },
+        error: (err) => {
+          console.error('Error actualizando:', err);
+          this.errorMessage = `Error: ${err.error?.message || err.message || 'Error al actualizar'}`;
+          this.guardando = false;
+        }
       });
     } else {
-      // 👇 create ahora retorna Observable
       this.tipoHabitacionService.create(room).subscribe({
-        next: () => this.router.navigate(['/tipos-habitacion']),
-        error: (err) => console.error('Error creando:', err)
+        next: (response) => {
+          console.log('Creado exitosamente:', response);
+          this.successMessage = 'Tipo de habitación creado correctamente';
+          setTimeout(() => this.router.navigate(['/tipos-habitacion/admin']), 1500);
+        },
+        error: (err) => {
+          console.error('Error creando:', err);
+          this.errorMessage = `Error: ${err.error?.message || err.message || 'Error al crear'}`;
+          this.guardando = false;
+        }
       });
     }
   }

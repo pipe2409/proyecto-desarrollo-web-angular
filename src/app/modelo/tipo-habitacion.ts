@@ -7,5 +7,5 @@ export interface TipoHabitacion {
   capacity: number;
   beds: string;
   amenities: string[];
-  available: boolean;
+  available?: boolean;
 }

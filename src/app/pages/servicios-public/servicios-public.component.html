@@ -1,0 +1,154 @@
+
+<section class="hero-simple">
+  <div class="hero-simple__overlay"></div>
+  <div class="hero-simple__content">
+    <div class="hero-simple__title-box">
+      <h1 class="hero-simple__title">Servicios Adicionales</h1>
+      <p class="hero-simple__subtitle">
+        Mejora tu experiencia con nuestros servicios premium diseñados para tu comodidad
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Estado de carga -->
+<div *ngIf="cargando" class="loading-state">
+  <div class="spinner"></div>
+  <p>Cargando servicios...</p>
+</div>
+
+<!-- Error -->
+<div *ngIf="error" class="error-state">
+  <p>{{ error }}</p>
+</div>
+
+<!-- Servicios dinámicos en carrusel -->
+<section class="services-page" *ngIf="!cargando && !error && servicios.length > 0">
+  <div class="container">
+    <div class="services-carousel-wrap">
+      <div class="services-carousel" #servicesCarousel>
+        <article class="services-page__card" 
+                  *ngFor="let servicio of servicios"
+                  [style.--service-bg]="'url(' + servicio.image + ')'">
+          <div class="services-page__bg"></div>
+          <div class="services-page__content">
+            <div class="services-page__media">
+              <img class="services-page__img" 
+                   [src]="servicio.image" 
+                   [alt]="servicio.title">
+            </div>
+            <div class="services-page__text">
+              <span class="services-page__tag">Servicio exclusivo</span>
+              <h3 class="services-page__name">{{ servicio.title }}</h3>
+              <p class="services-page__desc">{{ servicio.subtitle }}</p>
+              <div class="services-page__footer">
+                <div class="services-page__price">
+                  Desde ${{ servicio.description }}
+                </div>
+                <div class="services-page__actions">
+                  <button class="btn btn-ocean" type="button">
+                    Reservar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Panel de confianza -->
+<section class="services-trust-panel" *ngIf="!cargando && !error">
+  <div class="container">
+    <div class="services-trust-panel__inner">
+      <article class="services-trust-card">
+        <div class="services-trust-card__icon services-trust-card__icon--blue">
+          <span>✓</span>
+        </div>
+        <h3>Calidad Garantizada</h3>
+        <p>Todos nuestros servicios cumplen con los más altos estándares de calidad</p>
+      </article>
+      <article class="services-trust-card">
+        <div class="services-trust-card__icon services-trust-card__icon--purple">
+          <span>◦</span>
+        </div>
+        <h3>Atención Personalizada</h3>
+        <p>Personal profesional dedicado a hacer tu experiencia única</p>
+      </article>
+      <article class="services-trust-card">
+        <div class="services-trust-card__icon services-trust-card__icon--gold">
+          <span>$</span>
+        </div>
+        <h3>Mejor Precio</h3>
+        <p>Tarifas competitivas con la mejor relación calidad-precio</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto" class="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+  <div class="footer-logo-icon">
+    <img src="assets/images/logoPraia.png" alt="Hotel Praia" />
+  </div>
+  <span class="footer-logo-text">Hotel Praia</span>
+</div>
+
+        <p class="footer-description">
+          Un refugio de elegancia, descanso y experiencias memorables frente al mar.
+          Diseñado para viajeros que buscan confort con carácter.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h3>Navegación</h3>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#habitaciones">Habitaciones</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#testimonios">Testimonios</a></li>
+          <li><a href="#reservas">Reservas</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contacto</h3>
+        <ul>
+          <li>📍 Frente al mar, destino exclusivo</li>
+          <li>📞 +57 300 000 0000</li>
+          <li>✉️ reservas@hotelpraia.com</li>
+          <li>⏰ Atención 24/7</li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Conecta</h3>
+        <p class="footer-newsletter-text">
+          Recibe novedades, ofertas especiales y experiencias exclusivas de Hotel Praia.
+        </p>
+
+        <form class="footer-newsletter">
+          <input type="email" placeholder="Tu correo electrónico" />
+          <button type="button">Suscribirme</button>
+        </form>
+
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="#" aria-label="WhatsApp">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Hotel Praia. Todos los derechos reservados.</p>
+      <p>Diseñado para una experiencia premium.</p>
+    </div>
+  </div>
+</footer>

@@ -16,7 +16,6 @@ export class TipoHabitacionService {
 
   constructor(private http: HttpClient) {}
 
-  // 👇 mapea los campos del backend a los campos que usa Angular
   private mapear(item: any): TipoHabitacion {
     return {
       id:          item.id,
@@ -29,7 +28,7 @@ export class TipoHabitacionService {
       amenities:   item.amenities
                     ? item.amenities.split(',').map((a: string) => a.trim())
                     : [],
-      available:   true  // 👈 el backend no envía este campo, se asume true por defecto
+      available:   item.disponible !== undefined ? item.disponible : true
     };
   }
 
@@ -61,7 +60,6 @@ export class TipoHabitacionService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  // 👇 convierte los campos de Angular al formato que espera el backend
   private desmapear(room: TipoHabitacion): any {
     return {
       nombre:      room.name,
@@ -70,6 +68,7 @@ export class TipoHabitacionService {
       imagenUrl:   room.imageUrl,
       capacidad:   room.capacity,
       camas:       room.beds,
+      disponible:  room.available !== undefined ? room.available : true,
       amenities:   Array.isArray(room.amenities)
                     ? room.amenities.join(', ')
                     : room.amenities

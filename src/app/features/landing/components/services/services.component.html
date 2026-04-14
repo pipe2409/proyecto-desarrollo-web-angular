@@ -9,44 +9,70 @@
       </p>
     </div>
 
-    <div class="services-editorial-layout">
-      <div class="services-tabs">
-        <article
-          class="service-tab"
-          *ngFor="let service of services"
-          [class.active]="isActive(service)"
-          (click)="setActiveService(service)"
-        >
-          <div class="service-tab-summary">
-            <h3>{{ service.title }}</h3>
-            <span>{{ service.subtitle }}</span>
+    <!-- Estado de carga -->
+    <div *ngIf="cargando" class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+      <p class="mt-2">Cargando servicios...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-center">
+      {{ error }}
+    </div>
+
+    <!-- Contenido normal -->
+    <div *ngIf="!cargando && !error && services.length > 0">
+      <div class="services-editorial-layout">
+        <div class="services-tabs">
+          <article
+            class="service-tab"
+            *ngFor="let service of services"
+            [class.active]="isActive(service)"
+            (click)="setActiveService(service)"
+          >
+            <div class="service-tab-summary">
+              <h3>{{ service.title }}</h3>
+              <span>{{ service.subtitle }}</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="services-panel">
+          <div class="services-panel-image">
+            <img
+              [src]="activeService?.image"
+              [alt]="activeService?.title"
+            />
           </div>
 
-        </article>
-      </div>
+          <div class="services-panel-copy">
+            <p class="services-panel-subtitle">{{ activeService?.subtitle }}</p>
+            <h3 class="services-panel-title">{{ activeService?.title }}</h3>
+            <p class="services-panel-description">
+              {{ activeService?.description }}
+            </p>
 
-      <div class="services-panel">
-        <div class="services-panel-image">
-          <img
-            [src]="activeService.image"
-            [alt]="activeService.title"
-          />
-        </div>
-
-        <div class="services-panel-copy">
-          <p class="services-panel-subtitle">{{ activeService.subtitle }}</p>
-          <h3 class="services-panel-title">{{ activeService.title }}</h3>
-          <p class="services-panel-description">
-            {{ activeService.description }}
-          </p>
-
-          <ul class="services-panel-features">
-            <li *ngFor="let feature of activeService.features">
-              {{ feature }}
-            </li>
-          </ul>
+            <ul class="services-panel-features">
+              <li *ngFor="let feature of activeService?.features">
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+
+      <!-- Botón Ver todos los servicios - Sombra suave -->
+<div class="text-center mt-16">
+  <button 
+    (click)="verTodosLosServicios()"
+    class="inline-flex items-center gap-2 px-8 py-3 text-gray-600 transition-all duration-300 bg-white border border-gray-200 rounded-full shadow-sm hover:shadow-md hover:border-gray-300 group"
+  >
+    <span class="font-medium">Ver todos los servicios</span>
+    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+    </svg>
+  </button>
+</div>
     </div>
   </div>
 </section>

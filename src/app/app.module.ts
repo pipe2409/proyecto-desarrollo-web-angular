@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,10 @@ import { ServicioFormComponent } from './pages/servicios-form/servicios-form.com
 import { LoginComponent } from './pages/login/login.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
+import { ServiciosPublicComponent } from './pages/servicios-public/servicios-public.component';
+import { HabitacionesAdminComponent } from './pages/habitaciones-admin/habitaciones-admin.component';
+import { HabitacionesFormComponent } from './pages/habitaciones-form/habitaciones-form.component';
+
 
 @NgModule({
   declarations: [
@@ -23,14 +28,21 @@ import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
     ServicioFormComponent,
     LoginComponent,
     RegistroComponent,
-    MiPerfilComponent
+    MiPerfilComponent,
+    ServiciosPublicComponent,
+    HabitacionesAdminComponent,
+    HabitacionesFormComponent,
+ 
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LandingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
