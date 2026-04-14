@@ -1,4 +1,6 @@
 import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +8,14 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-
   isMobileMenuOpen = false;
   isScrolled = false;
   showNavbar = false;
+
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
@@ -23,14 +29,30 @@ export class NavbarComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  irALogin(): void {
+    this.router.navigate(['/login']);
+    this.closeMobileMenu();
+  }
+
+  irAMiPerfil(): void {
+    this.router.navigate(['/mi-perfil']);
+    this.closeMobileMenu();
+  }
+
+  cerrarSesion(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
+    this.closeMobileMenu();
+  }
+
+  get nombreUsuario(): string {
+    return localStorage.getItem('nombre') || 'Mi cuenta';
+  }
+
   @HostListener('window:scroll', [])
   onScroll(): void {
     const scrollY = window.scrollY;
-
-    // Mostrar navbar después de un pequeño scroll
     this.showNavbar = scrollY > 50;
-
-    // Cambiar estilo cuando baja más
     this.isScrolled = scrollY > 100;
   }
 }

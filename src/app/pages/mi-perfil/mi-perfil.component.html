@@ -1,0 +1,142 @@
+<div class="perfil-page">
+  <div class="perfil-wrapper">
+
+    <!-- HEADER -->
+    <div class="perfil-header">
+      <p class="eyebrow">HOTEL PRAIA</p>
+      <h1>Mi perfil</h1>
+      <p class="subtitle">
+        Administra tu información personal, revisa tus reservas y gestiona tu cuenta.
+      </p>
+    </div>
+
+    <div class="perfil-grid">
+
+      <!-- ========================= -->
+      <!-- DATOS PERSONALES -->
+      <!-- ========================= -->
+      <div class="perfil-card">
+        <h2>Datos personales</h2>
+
+        <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" formControlName="nombre" />
+            </div>
+
+            <div class="form-group">
+              <label>Apellido</label>
+              <input type="text" formControlName="apellido" />
+            </div>
+
+            <div class="form-group full">
+              <label>Correo</label>
+              <input type="email" formControlName="correo" />
+            </div>
+
+            <div class="form-group">
+              <label>Cédula</label>
+              <input type="text" formControlName="cedula" />
+            </div>
+
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="text" formControlName="telefono" />
+            </div>
+
+            <div class="form-group full">
+              <label>Dirección</label>
+              <input type="text" formControlName="direccion" />
+            </div>
+
+            <div class="form-group full">
+              <label>Nacionalidad</label>
+              <input type="text" formControlName="nacionalidad" />
+            </div>
+
+          </div>
+
+          <button type="submit" class="primary-btn">
+            Guardar cambios
+          </button>
+
+        </form>
+
+        <p class="success-message" *ngIf="mensaje">{{ mensaje }}</p>
+        <p class="error-message" *ngIf="error">{{ error }}</p>
+      </div>
+
+      <!-- ========================= -->
+      <!-- RESERVAS -->
+      <!-- ========================= -->
+      <div class="perfil-card">
+        <h2>Mis reservas</h2>
+
+        <div *ngIf="reservas.length === 0" class="empty-state">
+          No tienes reservas registradas.
+        </div>
+
+        <div *ngFor="let reserva of reservas" class="reserva-item">
+
+          <div class="reserva-info">
+
+            <p>
+              <strong>Fecha inicio:</strong>
+              {{ reserva.fechaInicio | date:'mediumDate' }}
+            </p>
+
+            <p>
+              <strong>Fecha fin:</strong>
+              {{ reserva.fechaFin | date:'mediumDate' }}
+            </p>
+
+            <p>
+              <strong>Personas:</strong>
+              {{ reserva.cantidadPersonas }}
+            </p>
+
+            <p>
+              <strong>Estado:</strong>
+              {{ reserva.estado }}
+            </p>
+
+            <p>
+              <strong>Habitación:</strong>
+              {{ reserva.habitacion?.id || 'No disponible' }}
+            </p>
+
+          </div>
+
+          <button
+            class="secondary-btn"
+            (click)="cancelarReserva(reserva.id)">
+            Cancelar reserva
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ========================= -->
+      <!-- ZONA PELIGRO -->
+      <!-- ========================= -->
+      <div class="perfil-card danger-card">
+        <h2>Zona de peligro</h2>
+
+        <p>
+          Si eliminas tu cuenta, perderás acceso a toda tu información y reservas.
+          Esta acción no se puede deshacer.
+        </p>
+
+        <button
+          class="danger-btn"
+          (click)="eliminarCuenta()">
+          Eliminar mi cuenta
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
