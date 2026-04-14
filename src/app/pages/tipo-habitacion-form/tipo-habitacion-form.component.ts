@@ -23,14 +23,14 @@ export class TipoHabitacionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name:        ['', Validators.required],
       description: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0)]],
-      imageUrl: [''],
-      capacity: [1, [Validators.required, Validators.min(1)]],
-      beds: ['', Validators.required],
-      amenities: ['', Validators.required],
-      available: [true, Validators.required]
+      price:       [0, [Validators.required, Validators.min(0)]],
+      imageUrl:    [''],
+      capacity:    [1, [Validators.required, Validators.min(1)]],
+      beds:        ['', Validators.required],
+      amenities:   ['', Validators.required],
+      available:   [true]
     });
 
     const id = this.route.snapshot.paramMap.get('id');
@@ -39,14 +39,16 @@ export class TipoHabitacionFormComponent implements OnInit {
       this.editing = true;
       this.roomId = Number(id);
 
-      const room = this.tipoHabitacionService.getById(this.roomId);
-
-      if (room) {
-        this.form.patchValue({
-          ...room,
-          amenities: room.amenities.join(', ')
-        });
-      }
+      // 👇 getById ahora retorna Observable
+      this.tipoHabitacionService.getById(this.roomId).subscribe({
+        next: (room) => {
+          this.form.patchValue({
+            ...room,
+            amenities: room.amenities.join(', ') // 👈 array → string para el input
+          });
+        },
+        error: (err) => console.error('Error cargando tipo de habitación:', err)
+      });
     }
   }
 
@@ -59,27 +61,33 @@ export class TipoHabitacionFormComponent implements OnInit {
     const value = this.form.value;
 
     const room: TipoHabitacion = {
-      id: this.editing ? this.roomId : 0,
-      name: value.name,
+      id:          this.editing ? this.roomId : 0,
+      name:        value.name,
       description: value.description,
-      price: Number(value.price),
-      imageUrl: value.imageUrl,
-      capacity: Number(value.capacity),
-      beds: value.beds,
-      amenities: value.amenities
-        .split(',')
-        .map((item: string) => item.trim())
-        .filter((item: string) => item.length > 0),
-      available: value.available
+      price:       Number(value.price),
+      imageUrl:    value.imageUrl,
+      capacity:    Number(value.capacity),
+      beds:        value.beds,
+      amenities:   value.amenities
+                    .split(',')
+                    .map((item: string) => item.trim())
+                    .filter((item: string) => item.length > 0),
+      available:   value.available
     };
 
     if (this.editing) {
-      this.tipoHabitacionService.update(this.roomId, room);
+      // 👇 update ahora retorna Observable
+      this.tipoHabitacionService.update(this.roomId, room).subscribe({
+        next: () => this.router.navigate(['/tipos-habitacion']),
+        error: (err) => console.error('Error actualizando:', err)
+      });
     } else {
-      this.tipoHabitacionService.create(room);
+      // 👇 create ahora retorna Observable
+      this.tipoHabitacionService.create(room).subscribe({
+        next: () => this.router.navigate(['/tipos-habitacion']),
+        error: (err) => console.error('Error creando:', err)
+      });
     }
-
-    this.router.navigate(['/tipos-habitacion']);
   }
 
   cancel(): void {

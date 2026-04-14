@@ -33,17 +33,19 @@ export class ServicioFormComponent implements OnInit {
       this.editing = true;
       this.servicioId = +id;
 
-      const servicio = this.serviciosService.getById(+id);
-
-      if (servicio) {
-        this.form.setValue({
-          title: servicio.title,
-          subtitle: servicio.subtitle,
-          description: servicio.description,
-          image: servicio.image,
-          features: servicio.features.join(', '),
-        });
-      }
+      // 👇 ahora usamos subscribe porque getById retorna Observable
+      this.serviciosService.getById(+id).subscribe({
+        next: (servicio) => {
+          this.form.setValue({
+            title: servicio.title,
+            subtitle: servicio.subtitle,
+            description: servicio.description,
+            image: servicio.image,
+            features: servicio.features.join(', '),
+          });
+        },
+        error: (err) => console.error('Error cargando servicio:', err)
+      });
     }
   }
 
@@ -53,7 +55,7 @@ export class ServicioFormComponent implements OnInit {
     const valor = this.form.value;
 
     const servicio: Servicio = {
-      id: this.servicioId ?? Date.now(),
+      id: this.servicioId ?? 0, // 👈 el backend asigna el id real, 0 es placeholder
       title: valor.title ?? '',
       subtitle: valor.subtitle ?? '',
       description: valor.description ?? '',
@@ -65,12 +67,18 @@ export class ServicioFormComponent implements OnInit {
     };
 
     if (this.editing && this.servicioId !== null) {
-      this.serviciosService.update(this.servicioId, servicio);
+      // 👇 update ahora retorna Observable, hay que suscribirse
+      this.serviciosService.update(this.servicioId, servicio).subscribe({
+        next: () => this.router.navigate(['/servicios/admin']),
+        error: (err) => console.error('Error actualizando:', err)
+      });
     } else {
-      this.serviciosService.create(servicio);
+      // 👇 igual con create
+      this.serviciosService.create(servicio).subscribe({
+        next: () => this.router.navigate(['/servicios/admin']),
+        error: (err) => console.error('Error creando:', err)
+      });
     }
-
-    this.router.navigate(['/servicios/admin']);
   }
 
   cancel(): void {
