@@ -27,12 +27,32 @@
   </header>
 
   <main class="mx-auto max-w-6xl px-4 py-8">
-    <!-- Mensajes -->
-    <div *ngIf="okMessage" class="mb-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
-      {{ okMessage }}
+    <!-- Mensajes de éxito y error mejorados -->
+    <div *ngIf="okMessage" class="mb-6 rounded-xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/10 to-emerald-600/5 px-5 py-4 flex items-start gap-3 shadow-lg shadow-emerald-500/10">
+      <svg class="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+      </svg>
+      <div>
+        <div class="font-semibold text-emerald-300 text-sm">Éxito</div>
+        <div class="text-emerald-200 text-sm mt-0.5">{{ okMessage }}</div>
+      </div>
     </div>
-    <div *ngIf="errMessage" class="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
-      {{ errMessage }}
+
+    <div *ngIf="errMessage" class="mb-6 rounded-xl border border-red-500/40 bg-gradient-to-r from-red-500/10 to-rose-600/5 px-5 py-4 flex items-start gap-4 shadow-lg shadow-red-500/10">
+      <svg class="h-6 w-6 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+      </svg>
+      <div>
+        <div class="font-semibold text-red-300 text-sm">No se puede eliminar</div>
+        <div class="text-red-200 text-sm mt-1 leading-relaxed">{{ errMessage }}</div>
+        <div class="text-red-300/80 text-xs mt-3 p-2 bg-red-950/30 rounded-lg">
+          <div class="font-semibold mb-1">ℹ️ Referencia de estados de reservas:</div>
+          <div class="space-y-1 text-left">
+            <div>• <span class="text-red-200">PENDIENTE / CONFIRMADA</span> → Bloquea eliminación</div>
+            <div>• <span class="text-emerald-300">CANCELADA / FINALIZADA</span> → Permite eliminación</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Filtro -->
