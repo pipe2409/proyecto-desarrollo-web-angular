@@ -81,6 +81,9 @@ export class HabitacionesAdminComponent implements OnInit {
   }
 
   eliminarHabitacion(id: number): void {
+    // Obtener la habitación antes de intentar eliminar
+    const habitacion = this.habitaciones.find(h => h.id === id);
+    
     if (confirm('¿Eliminar esta habitación?')) {
       this.habitacionService.delete(id).subscribe({
         next: () => {
@@ -93,26 +96,30 @@ export class HabitacionesAdminComponent implements OnInit {
           
           const errorMessage = err.error?.message || err.error?.err || err.message || '';
           const statusCode = err.status || 0;
+          const estadoHabitacion = habitacion?.estado || 'desconocido';
           
           // Detectar tipo de error específico
           if (statusCode === 409 || statusCode === 400) {
-            // Error de conflicto/dependencia - verificar si es por reservas
+            // Error de conflicto/dependencia - usualmente por reservas activas
             const mensaje = errorMessage.toLowerCase();
             
-            if (mensaje.includes('pendiente') && mensaje.includes('confirmada')) {
-              this.errMessage = 'No se puede eliminar esta habitación porque tiene reservas activas. Existen reservas en estado PENDIENTE o CONFIRMADA. Solo puedes eliminar la habitación si todas sus reservas están CANCELADAS o FINALIZADAS.';
+            if (estadoHabitacion === 'DISPONIBLE') {
+              // La habitación está disponible pero tiene reservas activas
+              this.errMessage = 'Esta habitación está DISPONIBLE pero tiene reservas activas (PENDIENTE o CONFIRMADA). No se puede eliminar mientras tenga reservas activas. Por favor, asegúrate de que todas las reservas estén CANCELADAS o FINALIZADAS.';
+            } else if (estadoHabitacion === 'OCUPADA') {
+              this.errMessage = 'No se puede eliminar esta habitación porque está OCUPADA. Tiene reservas en estado PENDIENTE o CONFIRMADA. Espera a que finalicen o cancélalas primero.';
+            } else if (estadoHabitacion === 'MANTENIMIENTO') {
+              this.errMessage = 'No se puede eliminar esta habitación porque está en MANTENIMIENTO. Además tiene reservas asociadas. Cambia su estado y cancela las reservas primero.';
+            } else if (mensaje.includes('pendiente') && mensaje.includes('confirmada')) {
+              this.errMessage = 'No se puede eliminar esta habitación porque tiene reservas activas. Existen reservas en estado PENDIENTE o CONFIRMADA. Solo puedes eliminar si todas sus reservas están CANCELADAS o FINALIZADAS.';
             } else if (mensaje.includes('pendiente')) {
               this.errMessage = 'No se puede eliminar esta habitación porque tiene reservas en estado PENDIENTE. Estas deben ser canceladas o finalizadas primero.';
             } else if (mensaje.includes('confirmada')) {
               this.errMessage = 'No se puede eliminar esta habitación porque tiene reservas en estado CONFIRMADA. Estas deben ser canceladas o finalizadas primero.';
             } else if (mensaje.includes('reserva')) {
               this.errMessage = 'No se puede eliminar esta habitación porque tiene reservas asociadas activas. Por favor, cancela o finaliza todas las reservas primero.';
-            } else if (mensaje.includes('ocupada')) {
-              this.errMessage = 'No se puede eliminar esta habitación porque está actualmente ocupada. Espera a que se desocupe para intentar de nuevo.';
-            } else if (mensaje.includes('mantenimiento')) {
-              this.errMessage = 'No se puede eliminar esta habitación porque está en mantenimiento. Cambia su estado primero.';
             } else {
-              this.errMessage = 'No se puede eliminar esta habitación porque tiene dependencias activas. Revisa su estado.';
+              this.errMessage = 'No se puede eliminar esta habitación porque tiene dependencias activas. Revisa el estado de sus reservas.';
             }
           } else if (statusCode === 404) {
             this.errMessage = 'La habitación no fue encontrada. Recarga la página e intenta de nuevo.';
