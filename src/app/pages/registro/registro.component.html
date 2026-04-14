@@ -1,0 +1,73 @@
+<div class="registro-page">
+  <div class="registro-overlay"></div>
+
+  <div class="registro-wrapper">
+    <div class="brand-block">
+      <p class="eyebrow">HOTEL PRAIA</p>
+      <h1>Crea tu cuenta</h1>
+      <p class="subtitle">
+        Regístrate para gestionar tus reservas, guardar tus datos y disfrutar
+        una experiencia más ágil y personalizada.
+      </p>
+    </div>
+
+    <div class="registro-card">
+      <h2>Registro de huésped</h2>
+      <p class="card-text">Completa tus datos para continuar.</p>
+
+      <form [formGroup]="registroForm" (ngSubmit)="registrarse()">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" formControlName="nombre" placeholder="Tu nombre" />
+          </div>
+
+          <div class="form-group full">
+            <label for="apellido">Apellido</label>
+            <input id="apellido" type="text" formControlName="apellido" placeholder="Tu apellido" />
+          </div>
+
+          <div class="form-group full">
+            <label for="correo">Correo electrónico</label>
+            <input id="correo" type="email" formControlName="correo" placeholder="tucorreo@ejemplo.com" />
+          </div>
+
+          <div class="form-group full">
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" type="password" formControlName="contrasena" placeholder="Ingresa tu contraseña" />
+          </div>
+
+          <div class="form-group">
+            <label for="cedula">Cédula</label>
+            <input id="cedula" type="text" formControlName="cedula" placeholder="Número de documento" />
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" type="text" formControlName="telefono" placeholder="+57 3000000000" />
+          </div>
+
+          <div class="form-group full">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" type="text" formControlName="direccion" placeholder="Dirección de residencia" />
+          </div>
+
+          <div class="form-group full">
+            <label for="nacionalidad">Nacionalidad</label>
+            <input id="nacionalidad" type="text" formControlName="nacionalidad" placeholder="Tu nacionalidad" />
+          </div>
+        </div>
+
+        <button type="submit" class="registro-btn">Crear cuenta</button>
+
+        <p class="success-message" *ngIf="mensaje">{{ mensaje }}</p>
+        <p class="error-message" *ngIf="error">{{ error }}</p>
+      </form>
+
+      <div class="registro-footer">
+        <span>¿Ya tienes cuenta?</span>
+        <a routerLink="/login">Inicia sesión</a>
+      </div>
+    </div>
+  </div>
+</div>

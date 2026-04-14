@@ -1,0 +1,50 @@
+<div class="login-page">
+  <div class="login-overlay"></div>
+
+  <div class="login-wrapper">
+    <div class="brand-block">
+      <p class="eyebrow">HOTEL PRAIA</p>
+      <h1>Bienvenido de nuevo</h1>
+      <p class="subtitle">
+        Ingresa a tu cuenta para gestionar reservas, consultar tu información y
+        continuar con tu experiencia premium.
+      </p>
+    </div>
+
+    <div class="login-card">
+      <h2>Iniciar sesión</h2>
+      <p class="card-text">Accede con tu correo y contraseña.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()">
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input
+            id="correo"
+            type="email"
+            formControlName="correo"
+            placeholder="tucorreo@ejemplo.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="contrasena">Contraseña</label>
+          <input
+            id="contrasena"
+            type="password"
+            formControlName="contrasena"
+            placeholder="Ingresa tu contraseña"
+          />
+        </div>
+
+        <button type="submit" class="login-btn">Ingresar</button>
+
+        <p class="error-message" *ngIf="error">{{ error }}</p>
+      </form>
+
+      <div class="login-footer">
+        <span>¿No tienes cuenta?</span>
+        <a routerLink="/registro">Regístrate aquí</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 <nav class="navbar" [class.show-navbar]="showNavbar" [class.scrolled]="isScrolled">
   <div class="nav-container">
     
+    <!-- LOGO -->
     <div class="nav-logo" (click)="scrollToTop()">
       <div class="logo-icon">
         <img src="assets/images/logoPraia.png" alt="logoPraia" />
@@ -8,16 +9,55 @@
       <span class="logo-text">Hotel Praia</span>
     </div>
 
+    <!-- LINKS -->
     <div class="nav-links" [class.active]="isMobileMenuOpen">
+      
       <a href="#inicio" class="nav-link" (click)="closeMobileMenu()">Inicio</a>
       <a href="#habitaciones" class="nav-link" (click)="closeMobileMenu()">Habitaciones</a>
       <a href="#servicios" class="nav-link" (click)="closeMobileMenu()">Servicios</a>
       <a href="#galeria" class="nav-link" (click)="closeMobileMenu()">Galería</a>
       <a href="#testimonios" class="nav-link" (click)="closeMobileMenu()">Testimonios</a>
       <a href="#contacto" class="nav-link" (click)="closeMobileMenu()">Contacto</a>
-      <a href="#reservas" class="nav-link nav-link-cta" (click)="closeMobileMenu()">Reservar</a>
+
+      <!-- 🔴 SI NO ESTÁ LOGUEADO -->
+      <a 
+        *ngIf="!authService.estaLogueado()"
+        class="nav-link"
+        (click)="irALogin()"
+      >
+        Iniciar sesión
+      </a>
+
+      <!-- 🟢 SI ESTÁ LOGUEADO -->
+      <a 
+  *ngIf="authService.estaLogueado()"
+  class="nav-link"
+  (click)="irAMiPerfil()"
+>
+  {{ nombreUsuario }}
+</a>
+
+      <!-- 🔴 CERRAR SESIÓN -->
+      <a 
+        *ngIf="authService.estaLogueado()"
+        class="nav-link"
+        (click)="cerrarSesion()"
+      >
+        Cerrar sesión
+      </a>
+
+      <!-- BOTÓN CTA -->
+      <a 
+        href="#reservas" 
+        class="nav-link nav-link-cta" 
+        (click)="closeMobileMenu()"
+      >
+        Reservar
+      </a>
+
     </div>
 
+    <!-- MOBILE -->
     <button
       class="mobile-menu-btn"
       type="button"

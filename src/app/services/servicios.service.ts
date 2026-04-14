@@ -7,7 +7,6 @@ import { SERVICES_DATA } from '../features/landing/data/servicio.data';
 })
 export class ServiciosService {
   private servicios = SERVICES_DATA;
-
   constructor() {}
 
   getAll(): Servicio[] {

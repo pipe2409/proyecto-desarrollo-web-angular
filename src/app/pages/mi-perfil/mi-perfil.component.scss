@@ -1,0 +1,150 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.perfil-page {
+  min-height: 100vh;
+  background: #083b57;
+  padding: 3rem 1.5rem;
+  color: white;
+}
+
+.perfil-wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.perfil-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  color: #d4ad5d;
+  letter-spacing: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.perfil-header h1 {
+  color: #d4ad5d;
+  font-size: 3rem;
+  margin: 0.5rem 0;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.perfil-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.perfil-card {
+  background: rgba(9, 44, 66, 0.95);
+  border: 1px solid rgba(212, 173, 93, 0.22);
+  border-radius: 22px;
+  padding: 1.8rem;
+}
+
+.perfil-card h2 {
+  color: #d4ad5d;
+  margin-top: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+}
+
+.form-group input {
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.primary-btn {
+  margin-top: 1.2rem;
+  width: 100%;
+  background: #d4ad5d;
+  color: #0a2434;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #d4ad5d;
+  border: 1px solid #d4ad5d;
+}
+
+.danger-btn {
+  background: #b91c1c;
+  color: white;
+}
+
+.reserva-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.empty-state {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.danger-card p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.success-message {
+  color: #b8f7c9;
+  margin-top: 1rem;
+}
+
+.error-message {
+  color: #ffb4b4;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid,
+  .reserva-item {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .form-group.full {
+    grid-column: auto;
+  }
+}

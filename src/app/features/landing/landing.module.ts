@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -30,6 +31,7 @@ import { TestimonialsCardsComponent } from './components/testimonials/testimonia
   ],
   imports: [
     CommonModule,
+    RouterModule,
     ReactiveFormsModule
   ],
   exports: [
