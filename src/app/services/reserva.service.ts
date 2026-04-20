@@ -11,16 +11,35 @@ export class ReservaService {
 
   constructor(private http: HttpClient) {}
 
+  getAll(): Observable<Reserva[]> {
+    return this.http.get<Reserva[]>(this.apiUrl);
+  }
+
+  getById(id: number): Observable<Reserva> {
+    return this.http.get<Reserva>(`${this.apiUrl}/${id}`);
+  }
+
+  create(data: any): Observable<Reserva> {
+    return this.http.post<Reserva>(this.apiUrl, data);
+  }
+
+  update(id: number, data: any): Observable<Reserva> {
+    return this.http.put<Reserva>(`${this.apiUrl}/${id}`, data);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Métodos existentes — no los tocamos
   listarPorHuesped(huespedId: number): Observable<Reserva[]> {
     return this.http.get<Reserva[]>(`${this.apiUrl}/huesped/${huespedId}`);
   }
 
-  // 👇 RESERVA POR HABITACIÓN (puedes dejarlo)
   crearReserva(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/crear`, data);
   }
 
-  // 👇 NUEVO: RESERVA POR TIPO (ESTE ES EL IMPORTANTE)
   crearReservaPorTipo(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/crear-por-tipo`, data);
   }

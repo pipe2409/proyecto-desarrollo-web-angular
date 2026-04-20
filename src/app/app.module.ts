@@ -18,6 +18,7 @@ import { ServiciosPublicComponent } from './pages/servicios-public/servicios-pub
 import { HabitacionesAdminComponent } from './pages/habitaciones-admin/habitaciones-admin.component';
 import { HabitacionesFormComponent } from './pages/habitaciones-form/habitaciones-form.component';
 import { ReservarComponent } from './pages/reservar/reservar.component';
+import { ReservasFormComponent } from './pages/reservas-form/reservas-form.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { ReservarComponent } from './pages/reservar/reservar.component';
     HabitacionesAdminComponent,
     HabitacionesFormComponent,
     ReservarComponent,
+    ReservasFormComponent,
  
 
   ],
