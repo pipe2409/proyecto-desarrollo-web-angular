@@ -11,6 +11,7 @@ import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { ServiciosPublicComponent } from './pages/servicios-public/servicios-public.component';
 import { HabitacionesAdminComponent } from './pages/habitaciones-admin/habitaciones-admin.component';
 import { HabitacionesFormComponent } from './pages/habitaciones-form/habitaciones-form.component';
+import { ReservarComponent } from './pages/reservar/reservar.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,8 @@ const routes: Routes = [
   { path: 'servicios/admin', component: ServiciosAdminComponent },
   { path: 'servicios/admin/nuevo', component: ServicioFormComponent },
   { path: 'servicios/admin/editar/:id', component: ServicioFormComponent },
+
+  { path: 'reservar-tipo/:id', component: ReservarComponent },
 
   { path: '**', redirectTo: '' }
 ];

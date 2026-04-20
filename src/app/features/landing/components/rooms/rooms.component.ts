@@ -1,13 +1,16 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { TipoHabitacion } from '../../../../modelo/tipo-habitacion';
 import { TipoHabitacionService } from '../../../../services/tipo-habitacion.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-rooms',
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss']
 })
-export class RoomsComponent implements AfterViewInit {
+export class RoomsComponent implements OnInit, AfterViewInit {
+
   @ViewChild('carousel') carouselRef!: ElementRef<HTMLDivElement>;
 
   rooms: TipoHabitacion[] = [];
@@ -15,7 +18,11 @@ export class RoomsComponent implements AfterViewInit {
   cargando: boolean = true;
   error: string = '';
 
-  constructor(private tipoHabitacionService: TipoHabitacionService) {}
+  constructor(
+    private tipoHabitacionService: TipoHabitacionService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.cargarHabitaciones();
@@ -39,6 +46,19 @@ export class RoomsComponent implements AfterViewInit {
     setTimeout(() => {
       this.scrollToActiveSlide();
     });
+  }
+
+  irAReserva(id: number, event: Event): void {
+    event.stopPropagation();
+
+    if (!this.authService.estaLogueado()) {
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: `/reservar-tipo/${id}` }
+      });
+      return;
+    }
+
+    this.router.navigate(['/reservar-tipo', id]);
   }
 
   scrollCarousel(direction: 'left' | 'right'): void {

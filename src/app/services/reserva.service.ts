@@ -15,7 +15,17 @@ export class ReservaService {
     return this.http.get<Reserva[]>(`${this.apiUrl}/huesped/${huespedId}`);
   }
 
+  // 👇 RESERVA POR HABITACIÓN (puedes dejarlo)
+  crearReserva(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/crear`, data);
+  }
+
+  // 👇 NUEVO: RESERVA POR TIPO (ESTE ES EL IMPORTANTE)
+  crearReservaPorTipo(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/crear-por-tipo`, data);
+  }
+
   cancelarReserva(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.put(`${this.apiUrl}/${id}/cancelar`, {});
   }
 }

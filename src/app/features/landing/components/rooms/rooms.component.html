@@ -15,20 +15,16 @@
           *ngFor="let room of rooms; let i = index"
           [class.is-active]="i === activeIndex"
           (click)="activeIndex = i"
-          
-
-          >
+        >
           <div class="habitacion-slide__image">
-            <img
-              [src]="room.imageUrl"
-              [alt]="room.name"
-              loading="lazy"
-            />
+            <img [src]="room.imageUrl" [alt]="room.name" loading="lazy" />
 
             <div class="habitacion-slide__overlay"></div>
 
             <div class="habitacion-slide__precio">
-              <span>{{ room.price | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span>{{
+                room.price | currency: "COP" : "symbol" : "1.0-0"
+              }}</span>
               <span>/noche</span>
             </div>
           </div>
@@ -55,7 +51,13 @@
             </div>
 
             <div class="habitacion-slide__actions">
-              <a class="btn-habitacion-primary" href="#reservas">Reservar</a>
+              <button
+                class="btn-habitacion-primary"
+                type="button"
+                (click)="irAReserva(room.id, $event)"
+              >
+                Reservar
+              </button>
             </div>
           </div>
         </article>

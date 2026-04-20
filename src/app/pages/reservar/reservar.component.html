@@ -1,0 +1,90 @@
+<div class="reservar-page" *ngIf="tipoHabitacion">
+  <div class="reservar-container">
+
+    <div class="reservar-hero">
+      <div class="reservar-media">
+        <img
+          [src]="tipoHabitacion.imagenUrl || tipoHabitacion.imageUrl"
+          [alt]="tipoHabitacion.nombre || tipoHabitacion.name"
+        />
+        <div class="reservar-media__badge">
+          {{ (tipoHabitacion.precio || tipoHabitacion.price) | currency:'COP':'symbol':'1.0-0' }}/noche
+        </div>
+      </div>
+
+      <div class="reservar-info">
+        <p class="reservar-kicker">HOTEL PRAIA</p>
+
+        <h1 class="reservar-title">
+          {{ tipoHabitacion.nombre || tipoHabitacion.name }}
+        </h1>
+
+        <p class="reservar-description">
+          {{ tipoHabitacion.descripcion || tipoHabitacion.description }}
+        </p>
+
+        <div class="reservar-meta">
+          <div class="meta-card">
+            <span class="meta-label">Capacidad</span>
+            <span class="meta-value">
+              {{ tipoHabitacion.capacidad || tipoHabitacion.capacity }}
+            </span>
+          </div>
+
+          <div class="meta-card">
+            <span class="meta-label">Camas</span>
+            <span class="meta-value">
+              {{ tipoHabitacion.camas || tipoHabitacion.beds }}
+            </span>
+          </div>
+
+          <div class="meta-card">
+            <span class="meta-label">Precio</span>
+            <span class="meta-value">
+              {{ (tipoHabitacion.precio || tipoHabitacion.price) | currency:'COP':'symbol':'1.0-0' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="reservar-servicios" *ngIf="(tipoHabitacion.amenities || '').length">
+          <h3>Servicios incluidos</h3>
+          <ul>
+            <li *ngFor="let amenity of (tipoHabitacion.amenities || '').split(',')">
+              {{ amenity.trim() }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="reserva-form-card">
+      <div class="form-header">
+        <p class="form-kicker">RESERVA</p>
+        <h2>Completa tu estadía</h2>
+        <p>Selecciona las fechas y la cantidad de personas para consultar disponibilidad.</p>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="fechaInicio">Fecha de inicio</label>
+          <input id="fechaInicio" type="date" [(ngModel)]="fechaInicio">
+        </div>
+
+        <div class="form-group">
+          <label for="fechaFin">Fecha de fin</label>
+          <input id="fechaFin" type="date" [(ngModel)]="fechaFin">
+        </div>
+
+        <div class="form-group form-group--full">
+          <label for="personas">Número de personas</label>
+          <input id="personas" type="number" min="1" [(ngModel)]="personas">
+        </div>
+      </div>
+
+      <button class="btn-confirmar" (click)="reservar()">
+        Confirmar reserva
+      </button>
+    </div>
+
+  </div>
+</div>
