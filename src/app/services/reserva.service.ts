@@ -1,22 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Reserva } from '../modelo/reserva';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
-  private apiUrl = 'http://localhost:8080/api/reservas';
+  private apiUrl = 'http://localhost:8080/api/reservas/admin';
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Reserva[]> {
-    return this.http.get<Reserva[]>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl).pipe(
+      map(items => items.map(item => this.mapear(item)))
+    );
   }
 
   getById(id: number): Observable<Reserva> {
-    return this.http.get<Reserva>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      map(item => this.mapear(item))
+    );
+  }
+
+  private mapear(item: any): Reserva {
+    return {
+      id: item.id,
+      fechaInicio: item.fechaInicio,
+      fechaFin: item.fechaFin,
+      cantidadPersonas: item.cantidadPersonas,
+      estado: item.estado,
+      huesped: item.huesped,
+      habitacion: item.habitacion,
+      operador: item.operador
+    };
   }
 
   create(data: any): Observable<Reserva> {

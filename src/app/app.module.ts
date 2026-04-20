@@ -19,6 +19,7 @@ import { HabitacionesAdminComponent } from './pages/habitaciones-admin/habitacio
 import { HabitacionesFormComponent } from './pages/habitaciones-form/habitaciones-form.component';
 import { ReservarComponent } from './pages/reservar/reservar.component';
 import { ReservasFormComponent } from './pages/reservas-form/reservas-form.component';
+import { ReservasAdminComponent } from './pages/reservas-admin/reservas-admin.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { ReservasFormComponent } from './pages/reservas-form/reservas-form.compo
     HabitacionesFormComponent,
     ReservarComponent,
     ReservasFormComponent,
+    ReservasAdminComponent,
  
 
   ],

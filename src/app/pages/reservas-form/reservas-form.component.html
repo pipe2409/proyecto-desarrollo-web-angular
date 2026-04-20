@@ -1,1 +1,102 @@
-<p>reservas-form works!</p>
+<div class="bg-slate-950 text-slate-100 min-h-screen">
+  <header class="border-b border-slate-800 bg-slate-950/70">
+    <div class="mx-auto max-w-3xl px-4 py-5 flex items-center justify-between">
+      <div>
+        <h1 class="text-xl font-semibold">
+          {{ modo === 'crear' ? 'Crear reserva' : 'Editar reserva' }}
+        </h1>
+        <p class="text-sm text-slate-400">Completa los campos y guarda.</p>
+      </div>
+      <button (click)="cancelar()"
+        class="rounded-lg border border-slate-800 px-4 py-2 text-sm hover:bg-slate-900">
+        Volver
+      </button>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-3xl px-4 py-8">
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
+
+      <!-- Cargando -->
+      <div *ngIf="cargando" class="text-center py-8">
+        <p class="text-slate-400 mt-2">Cargando...</p>
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="error"
+        class="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+        {{ error }}
+      </div>
+
+      <form *ngIf="!cargando" [formGroup]="form" (ngSubmit)="guardar()" class="space-y-4">
+
+        <!-- Fechas -->
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Check-in</label>
+            <input formControlName="fechaInicio" type="date"
+              class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500 [color-scheme:dark]" />
+            <div *ngIf="form.get('fechaInicio')?.invalid && form.get('fechaInicio')?.touched"
+              class="text-xs text-rose-400 mt-1">Campo requerido</div>
+          </div>
+
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Check-out</label>
+            <input formControlName="fechaFin" type="date"
+              class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500 [color-scheme:dark]" />
+            <div *ngIf="form.get('fechaFin')?.invalid && form.get('fechaFin')?.touched"
+              class="text-xs text-rose-400 mt-1">Campo requerido</div>
+          </div>
+        </div>
+
+        <!-- Personas y Estado -->
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Cantidad de personas</label>
+            <input formControlName="cantidadPersonas" type="number" min="1"
+              class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500" />
+            <div *ngIf="form.get('cantidadPersonas')?.invalid && form.get('cantidadPersonas')?.touched"
+              class="text-xs text-rose-400 mt-1">Mínimo 1 persona</div>
+          </div>
+
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Estado</label>
+            <select formControlName="estado"
+              class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500 [color-scheme:dark]">
+              <option value="PENDIENTE">PENDIENTE</option>
+              <option value="CONFIRMADA">CONFIRMADA</option>
+              <option value="CANCELADA">CANCELADA</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Habitación -->
+        <div>
+          <label class="block text-sm text-slate-300 mb-1">Habitación</label>
+          <select formControlName="habitacionId"
+            class="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-sm outline-none focus:border-sky-500 [color-scheme:dark]">
+            <option [ngValue]="null" disabled>Selecciona una habitación</option>
+            <option *ngFor="let h of habitaciones" [ngValue]="h.id">
+              {{ h.codigo }} — Piso {{ h.piso }} ({{ h.estado }})
+            </option>
+          </select>
+          <div *ngIf="form.get('habitacionId')?.invalid && form.get('habitacionId')?.touched"
+            class="text-xs text-rose-400 mt-1">Campo requerido</div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="pt-2 flex gap-2">
+          <button type="submit"
+            class="rounded-xl bg-sky-600 px-5 py-2 text-sm font-medium hover:bg-sky-500">
+            Guardar
+          </button>
+          <button type="button" (click)="cancelar()"
+            class="rounded-xl border border-slate-800 px-5 py-2 text-sm hover:bg-slate-900">
+            Cancelar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+</div>
