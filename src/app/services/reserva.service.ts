@@ -7,48 +7,41 @@ import { Reserva } from '../modelo/reserva';
   providedIn: 'root'
 })
 export class ReservaService {
-  private apiUrl = 'http://localhost:8080/api/reservas/admin';
+  private apiUrl = 'http://localhost:8080/api/reservas';
+  private adminUrl = 'http://localhost:8080/api/reservas/admin';
 
   constructor(private http: HttpClient) {}
 
+  // =========================
+  // ADMIN
+  // =========================
   getAll(): Observable<Reserva[]> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
+    return this.http.get<any[]>(this.adminUrl).pipe(
       map(items => items.map(item => this.mapear(item)))
     );
   }
 
   getById(id: number): Observable<Reserva> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<any>(`${this.adminUrl}/${id}`).pipe(
       map(item => this.mapear(item))
     );
   }
 
-  private mapear(item: any): Reserva {
-    return {
-      id: item.id,
-      fechaInicio: item.fechaInicio,
-      fechaFin: item.fechaFin,
-      cantidadPersonas: item.cantidadPersonas,
-      estado: item.estado,
-      huesped: item.huesped,
-      habitacion: item.habitacion,
-      operador: item.operador
-    };
-  }
-
   create(data: any): Observable<Reserva> {
-    return this.http.post<Reserva>(this.apiUrl, data);
+    return this.http.post<Reserva>(this.adminUrl, data);
   }
 
   update(id: number, data: any): Observable<Reserva> {
-    return this.http.put<Reserva>(`${this.apiUrl}/${id}`, data);
+    return this.http.put<Reserva>(`${this.adminUrl}/${id}`, data);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.adminUrl}/${id}`);
   }
 
-  // Métodos existentes — no los tocamos
+  // =========================
+  // USUARIO / HUÉSPED
+  // =========================
   listarPorHuesped(huespedId: number): Observable<Reserva[]> {
     return this.http.get<Reserva[]>(`${this.apiUrl}/huesped/${huespedId}`);
   }
@@ -63,5 +56,18 @@ export class ReservaService {
 
   cancelarReserva(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}/cancelar`, {});
+  }
+
+  private mapear(item: any): Reserva {
+    return {
+      id: item.id,
+      fechaInicio: item.fechaInicio,
+      fechaFin: item.fechaFin,
+      cantidadPersonas: item.cantidadPersonas,
+      estado: item.estado,
+      huesped: item.huesped,
+      habitacion: item.habitacion,
+      operador: item.operador
+    };
   }
 }
