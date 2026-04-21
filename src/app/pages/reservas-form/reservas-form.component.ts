@@ -118,13 +118,9 @@ export class ReservasFormComponent implements OnInit {
       const fechaInicioStr = this.form.get('fechaInicio')?.value;
       const fechaFinStr = this.form.get('fechaFin')?.value;
 
-      // Asegurar que las fechas tengan formato LocalDateTime (YYYY-MM-DDTHH:mm:ss)
-      const fechaInicio = fechaInicioStr?.includes('T') ? fechaInicioStr : `${fechaInicioStr}T14:00:00`;
-      const fechaFin = fechaFinStr?.includes('T') ? fechaFinStr : `${fechaFinStr}T12:00:00`;
-
       const reservaData = {
-        fechaInicio,
-        fechaFin,
+        fechaInicio: fechaInicioStr, // El backend usa LocalDate.parse, espera solo YYYY-MM-DD
+        fechaFin: fechaFinStr,
         cantidadPersonas: this.form.get('cantidadPersonas')?.value,
         estado: nuevoEstado,
         habitacionId,
