@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, AuthResponse } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -32,9 +32,21 @@ export class LoginComponent {
     const { correo, contrasena } = this.loginForm.value;
 
     this.authService.login(correo, contrasena).subscribe({
-      next: () => this.router.navigate(['/']),
+      next: (response: AuthResponse) => {
+        console.log('Respuesta del login:', response); // 👈 DEBUG: ver qué llega
+        
+        // 👇 IMPORTANTE: Verificar el rol correctamente
+        if (response.rol === 'OPERADOR') {
+          console.log('Es operador, redirigiendo a /menu-admin');
+          this.router.navigate(['/menu-admin']);
+        } else {
+          console.log('Es cliente, redirigiendo a /');
+          this.router.navigate(['/']);
+        }
+      },
       error: (err) => {
-        this.error = err?.error?.message || 'Credenciales inválidas';
+        console.error('Error de login:', err);
+        this.error = err?.error?.err || err?.error?.message || 'Credenciales inválidas';
       }
     });
   }

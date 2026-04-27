@@ -1,0 +1,271 @@
+<!-- Loading -->
+<div *ngIf="loading" class="flex justify-center items-center h-64">
+  <div class="text-slate-300 text-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto mb-4"></div>
+    <p>Cargando estadísticas del hotel...</p>
+  </div>
+</div>
+
+<!-- Error -->
+<div *ngIf="error && !loading" class="mx-auto max-w-6xl px-4 py-8">
+  <div class="rounded-2xl border border-red-500/40 bg-red-500/10 p-6 text-center">
+    <p class="text-red-400">{{ error }}</p>
+    <button (click)="cargarEstadisticas()" class="mt-4 rounded-lg bg-sky-600 px-4 py-2 text-sm">Reintentar</button>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div *ngIf="!loading && !error">
+  
+  <!-- Header -->
+  <!-- Header -->
+<header class="border-b border-slate-800 bg-gradient-to-r from-slate-950 to-slate-900 text-slate-100 sticky top-0 z-50">
+  <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      
+      <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center overflow-hidden">
+        <img src="assets/images/logoPraia.png" alt="Praia Hotel" class="w-8 h-8 object-contain">
+      </div>
+      <div>
+        <h1 class="text-xl font-bold tracking-tight">Praia</h1>
+        <p class="text-xs text-slate-400">PANEL DE CONTROL</p>
+      </div>
+      <span class="ml-3 text-xs px-3 py-1 rounded-full bg-sky-600/20 text-sky-300 border border-sky-600/30">Portal Operador</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <div class="text-right hidden sm:block">
+        <p class="text-sm font-medium">Bienvenido, {{ operadorNombre }}</p>
+        <p class="text-xs text-slate-400">{{ fechaActual | date:'EEEE, d MMMM yyyy' }}</p>
+      </div>
+      <button (click)="logout()" 
+        class="rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium hover:bg-slate-800 hover:border-slate-600 transition-all duration-200 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+        </svg>
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</header>
+
+  <main class="mx-auto max-w-7xl px-6 py-8 text-slate-100">
+
+    <!-- Mensaje de bienvenida con estadísticas rápidas -->
+    <div class="mb-8 rounded-2xl bg-gradient-to-r from-sky-950/40 to-slate-900/40 border border-slate-800 p-6 backdrop-blur-sm">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">Bienvenido al panel de PRAIA.</h2>
+          <p class="mt-2 text-slate-300 max-w-2xl">
+            Hoy tenemos <strong class="text-sky-400 text-lg">{{ estadisticas.habitacionesOcupadas }}</strong> habitaciones ocupadas 
+            y <strong class="text-emerald-400 text-lg">{{ estadisticas.proximasLlegadas.length }}</strong> llegadas confirmadas.
+            Mantengamos el estándar de excelencia que nos define.
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button (click)="navegarA('/reservas/admin')" 
+            class="rounded-xl bg-sky-600 px-5 py-2.5 text-sm font-medium hover:bg-sky-500 transition-all duration-200 shadow-lg shadow-sky-600/20 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            Ver reservas del día
+          </button>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjetas de estadísticas estilo KPI -->
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div class="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/60 to-slate-900/30 p-5 hover:border-slate-700 transition-all duration-300 hover:scale-[1.02]">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-sm font-medium text-slate-400 uppercase tracking-wide">OCUPACIÓN HOY</div>
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="text-3xl font-bold text-white">{{ estadisticas.porcentajeOcupacion }}%</div>
+        <div class="mt-2 flex items-center gap-2">
+          <div class="h-1.5 flex-1 rounded-full bg-slate-700 overflow-hidden">
+            <div class="h-full rounded-full bg-gradient-to-r from-sky-500 to-sky-400" [style.width]="estadisticas.porcentajeOcupacion + '%'"></div>
+          </div>
+          <span class="text-xs text-slate-400">{{ estadisticas.habitacionesOcupadas }}/{{ estadisticas.totalHabitaciones }}</span>
+        </div>
+      </div>
+
+      <div class="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/60 to-slate-900/30 p-5 hover:border-slate-700 transition-all duration-300 hover:scale-[1.02]">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-sm font-medium text-slate-400 uppercase tracking-wide">RESERVAS ACTIVAS</div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="text-3xl font-bold text-white">{{ estadisticas.reservasActivas }}</div>
+        <div class="mt-2 text-xs text-slate-400">Huéspedes hospedados actualmente</div>
+      </div>
+
+      <div class="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/60 to-slate-900/30 p-5 hover:border-slate-700 transition-all duration-300 hover:scale-[1.02]">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-sm font-medium text-slate-400 uppercase tracking-wide">HUÉSPEDES</div>
+          <div class="w-10 h-10 rounded-xl bg-violet-500/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="text-3xl font-bold text-white">{{ estadisticas.totalHuespedes }}</div>
+        <div class="mt-2 text-xs text-slate-400">Cuentas registradas</div>
+      </div>
+
+      <div class="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/60 to-slate-900/30 p-5 hover:border-slate-700 transition-all duration-300 hover:scale-[1.02]">
+        <div class="flex items-center justify-between mb-3">
+          <div class="text-sm font-medium text-slate-400 uppercase tracking-wide">SERVICIOS</div>
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+            <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="text-3xl font-bold text-white">{{ estadisticas.serviciosActivos }}</div>
+        <div class="mt-2 text-xs text-slate-400">{{ estadisticas.totalServicios }} totales disponibles</div>
+      </div>
+    </div>
+
+    <!-- Sección Itinerario e Ingresos -->
+    <div class="grid gap-6 lg:grid-cols-2 mb-8">
+      
+      <!-- Próximas llegadas -->
+      <div class="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-900/20 p-5">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h3 class="text-lg font-semibold flex items-center gap-2">
+              <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+              ITINERARIO
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">Próximas llegadas</p>
+          </div>
+          <span class="text-xs px-2 py-1 rounded-full bg-sky-600/20 text-sky-300">{{ estadisticas.proximasLlegadas.length }} reservas</span>
+        </div>
+        
+        <div *ngIf="estadisticas.proximasLlegadas.length === 0" class="text-center text-slate-400 py-12">
+          <svg class="w-12 h-12 mx-auto mb-3 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <p>No hay llegadas próximas</p>
+        </div>
+        
+        <div class="space-y-3">
+          <div *ngFor="let llegada of estadisticas.proximasLlegadas" 
+               class="flex items-center justify-between border-b border-slate-800 pb-3 last:border-0 hover:bg-slate-800/30 p-2 rounded-lg transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center">
+                <span class="text-sm font-medium text-sky-400">{{ llegada.habitacion }}</span>
+              </div>
+              <div>
+                <div class="font-medium">{{ llegada.nombre }} {{ llegada.apellido }}</div>
+                <div class="text-xs text-slate-400">Hab. {{ llegada.habitacion }} • {{ llegada.personas }} {{ llegada.personas === 1 ? 'persona' : 'personas' }}</div>
+              </div>
+            </div>
+            <div class="text-sm font-medium text-sky-400">{{ llegada.fechaInicio }}</div>
+          </div>
+        </div>
+        
+        <button (click)="navegarA('/reservas/admin')" 
+          class="mt-5 w-full rounded-xl border border-slate-700 px-4 py-2.5 text-sm font-medium hover:bg-slate-800 transition-all duration-200 flex items-center justify-center gap-2">
+          VER TODAS LAS RESERVAS
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Ingresos y métricas -->
+      <div class="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-900/20 p-5">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h3 class="text-lg font-semibold flex items-center gap-2">
+              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              MES EN CURSO
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">Abril 2026</p>
+          </div>
+          <span class="text-xs px-2 py-1 rounded-full bg-emerald-600/20 text-emerald-400">
+            +{{ porcentajeCrecimiento }}% vs. periodo anterior
+          </span>
+        </div>
+        
+        <div class="text-4xl font-bold text-white mb-2">$ {{ formatearIngresos() }}</div>
+        <p class="text-xs text-slate-400 mb-4">Ingresos acumulados</p>
+        
+        <div class="mt-4 h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400" 
+               [style.width]="estadisticas.porcentajeOcupacion + '%'"></div>
+        </div>
+        <div class="flex justify-between text-xs text-slate-400 mt-2">
+          <span>Meta mensual</span>
+          <span>{{ estadisticas.porcentajeOcupacion }}% completado</span>
+        </div>
+        
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="rounded-xl bg-slate-800/50 p-3 text-center hover:bg-slate-800 transition">
+            <div class="text-2xl font-semibold text-sky-400">{{ estadisticas.porcentajeOcupacion }}%</div>
+            <div class="text-xs text-slate-400 mt-1">Ocupación promedio</div>
+          </div>
+          <div class="rounded-xl bg-slate-800/50 p-3 text-center hover:bg-slate-800 transition">
+            <div class="text-2xl font-semibold text-amber-400">4.8</div>
+            <div class="text-xs text-slate-400 mt-1">Calificación ★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones rápidas -->
+    <section class="mb-8">
+      <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        ACCIONES RÁPIDAS
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <button (click)="navegarA('/habitaciones/admin')" 
+          class="group rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-900/20 p-4 text-left hover:border-slate-700 hover:bg-slate-900/60 transition-all duration-200">
+          <div class="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200 inline-block">🏨</div>
+          <div class="font-medium mt-2">Habitaciones</div>
+          <div class="text-xs text-slate-400 mt-1">Gestionar disponibilidad y tipos</div>
+        </button>
+        <button (click)="navegarA('/servicios/admin')" 
+          class="group rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-900/20 p-4 text-left hover:border-slate-700 hover:bg-slate-900/60 transition-all duration-200">
+          <div class="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200 inline-block">🍽️</div>
+          <div class="font-medium mt-2">Servicios</div>
+          <div class="text-xs text-slate-400 mt-1">Administrar servicios del hotel</div>
+        </button>
+        <button (click)="navegarA('/tipos-habitacion')" 
+          class="group rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-900/20 p-4 text-left hover:border-slate-700 hover:bg-slate-900/60 transition-all duration-200">
+          <div class="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200 inline-block">🛏️</div>
+          <div class="font-medium mt-2">Tipos Habitación</div>
+          <div class="text-xs text-slate-400 mt-1">Configurar categorías y precios</div>
+        </button>
+        <button (click)="navegarA('/reservas/admin')" 
+          class="group rounded-xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-900/20 p-4 text-left hover:border-slate-700 hover:bg-slate-900/60 transition-all duration-200">
+          <div class="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200 inline-block">📅</div>
+          <div class="font-medium mt-2">Reservas</div>
+          <div class="text-xs text-slate-400 mt-1">Ver y gestionar reservas</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="text-center text-xs text-slate-500 border-t border-slate-800 pt-6 mt-4">
+      <p>PRAIA Hotel Management System • Panel de Operador</p>
+      <p class="mt-1">© 2026 PRAIA Hotels - Todos los derechos reservados</p>
+    </div>
+  </main>
+</div>

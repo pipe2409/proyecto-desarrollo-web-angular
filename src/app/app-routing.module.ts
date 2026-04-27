@@ -14,6 +14,9 @@ import { HabitacionesFormComponent } from './pages/habitaciones-form/habitacione
 import { ReservarComponent } from './pages/reservar/reservar.component';
 import { ReservasAdminComponent } from './pages/reservas-admin/reservas-admin.component';
 import { ReservasFormComponent } from './pages/reservas-form/reservas-form.component';
+import { MenuAdminComponent } from './pages/menu-admin/menu-admin.component';
+import { AuthService } from './services/auth.service';
+
 
 
 const routes: Routes = [
@@ -42,6 +45,8 @@ const routes: Routes = [
   { path: 'reservas/admin', component: ReservasAdminComponent },
   { path: 'reservas/admin/nuevo', component: ReservasFormComponent },
   { path: 'reservas/admin/editar/:id', component: ReservasFormComponent },
+
+  { path: 'menu-admin', component: MenuAdminComponent },
 
   { path: '**', redirectTo: '' }
 ];

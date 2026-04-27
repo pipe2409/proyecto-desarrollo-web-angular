@@ -1,5 +1,4 @@
 export class Operador {
-
   id?: number;
   correo?: string;
   contrasena?: string;
@@ -13,5 +12,4 @@ export class Operador {
     this.correo = correo;
     this.contrasena = contrasena;
   }
-
 }
