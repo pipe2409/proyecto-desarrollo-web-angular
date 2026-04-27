@@ -94,4 +94,40 @@ export class ReservasAdminComponent implements OnInit {
       }
     });
   }
+
+finalizandoId: number | null = null;
+
+finalizarReserva(reserva: Reserva): void {
+    if (!reserva.id) return;
+    
+    if (!confirm(`¿Finalizar reserva #${reserva.id} para ${reserva.huesped?.nombre} ${reserva.huesped?.apellido}?\n\nEsta acción marcará la reserva como FINALIZADA y liberará la habitación.`)) {
+        return;
+    }
+    
+    this.finalizandoId = reserva.id;
+    
+    this.reservaService.finalizarReserva(reserva.id).subscribe({
+        next: () => {
+            this.okMessage = `✅ Reserva #${reserva.id} finalizada correctamente`;
+            this.errMessage = '';
+            this.finalizandoId = null;
+            this.cargarReservas();
+            setTimeout(() => this.okMessage = '', 4000);
+        },
+        error: (err) => {
+            this.finalizandoId = null;
+            const mensajeError = err.error?.err || 'Error al finalizar la reserva';
+            if (mensajeError.includes('deuda')) {
+                this.errMessage = mensajeError;
+            } else {
+                this.errMessage = mensajeError;
+            }
+            this.okMessage = '';
+            setTimeout(() => this.errMessage = '', 6000);
+        }
+    });
+}
+
+
+
 }

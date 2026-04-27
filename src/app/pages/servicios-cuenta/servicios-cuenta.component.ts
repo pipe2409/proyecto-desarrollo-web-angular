@@ -100,19 +100,34 @@ export class ServiciosCuentaComponent implements OnInit {
   }
 
   // Cargar items de la cuenta
-  cargarItemsCuenta(cuentaId: number): void {
-    this.cuentaService.getItemsCuenta(cuentaId).subscribe({
-      next: (items) => {
-        this.itemsCuenta = items;
-        this.calcularTotal();
-      },
-      error: (err) => {
-        console.error('Error cargando items:', err);
-        this.errorMessage = 'No se pudieron cargar los items de la cuenta';
-      }
-    });
-  }
-
+// Cargar items de la cuenta
+cargarItemsCuenta(cuentaId: number): void {
+  this.cuentaService.getItemsCuenta(cuentaId).subscribe({
+    next: (items) => {
+      // Mapear los items para convertir 'nombre' a 'title'
+      this.itemsCuenta = items.map((item: any) => ({
+        id: item.id,
+        cantidad: item.cantidad,
+        subtotal: item.subtotal,
+        servicio: {
+          id: item.servicio?.id,
+          title: item.servicio?.nombre,  // ← Convertir nombre a title
+          nombre: item.servicio?.nombre,
+          subtitle: item.servicio?.descripcion,
+          description: item.servicio?.descripcion,
+          image: item.servicio?.imagenUrl,
+          price: item.servicio?.precio
+        } as any,
+        cuentaHabitacion: item.cuentaHabitacion
+      }));
+      this.calcularTotal();
+    },
+    error: (err) => {
+      console.error('Error cargando items:', err);
+      this.errorMessage = 'No se pudieron cargar los items de la cuenta';
+    }
+  });
+}
   // Agregar servicio a la cuenta
   agregarServicio(servicio: any): void {
     if (!this.cuentaSeleccionada?.id) {

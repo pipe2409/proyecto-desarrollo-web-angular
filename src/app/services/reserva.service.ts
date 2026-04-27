@@ -58,6 +58,11 @@ export class ReservaService {
     return this.http.put(`${this.apiUrl}/${id}/cancelar`, {});
   }
 
+  // Agregar este método
+finalizarReserva(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/finalizar`, {});
+}
+
   private mapear(item: any): Reserva {
     return {
       id: item.id,
