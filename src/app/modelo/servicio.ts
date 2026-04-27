@@ -5,4 +5,5 @@ export interface Servicio {
   description: string;  
   image: string;        
   features: string[];   
+  precio?: number;
 }

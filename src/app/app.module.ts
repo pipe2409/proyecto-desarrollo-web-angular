@@ -21,6 +21,7 @@ import { ReservarComponent } from './pages/reservar/reservar.component';
 import { ReservasFormComponent } from './pages/reservas-form/reservas-form.component';
 import { ReservasAdminComponent } from './pages/reservas-admin/reservas-admin.component';
 import { MenuAdminComponent } from './pages/menu-admin/menu-admin.component';
+import { ServiciosCuentaComponent } from './pages/servicios-cuenta/servicios-cuenta.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MenuAdminComponent } from './pages/menu-admin/menu-admin.component';
     ReservasFormComponent,
     ReservasAdminComponent,
     MenuAdminComponent,
+    ServiciosCuentaComponent,
  
 
   ],

@@ -16,6 +16,7 @@ import { ReservasAdminComponent } from './pages/reservas-admin/reservas-admin.co
 import { ReservasFormComponent } from './pages/reservas-form/reservas-form.component';
 import { MenuAdminComponent } from './pages/menu-admin/menu-admin.component';
 import { AuthService } from './services/auth.service';
+import { ServiciosCuentaComponent } from './pages/servicios-cuenta/servicios-cuenta.component';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'tipos-habitacion/editar/:id', component: TipoHabitacionFormComponent },
   
   { path: 'servicios', component: ServiciosPublicComponent },
+  { path: 'operador/servicios-cuenta', component: ServiciosCuentaComponent },
 
   { path: 'habitaciones/admin', component: HabitacionesAdminComponent },
   { path: 'habitaciones/admin/nuevo', component: HabitacionesFormComponent },
